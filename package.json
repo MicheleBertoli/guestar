@@ -1,13 +1,14 @@
 {
   "name": "Guestar",
   "version": "0.2.0",
-  "description": "RN 0.14 + Flux + HMR + Webpack + ES6 Application",
+  "description": "RN 0.14 + Flux + HMR + Webpack + ES2015 Application",
   "keywords": [
     "guestar",
     "react native",
     "flux",
     "hot module reload",
     "es6",
+    "es2015",
     "webpack"
   ],
   "homepage": "http://guestar.com",

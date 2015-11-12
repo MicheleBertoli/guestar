@@ -1,6 +1,7 @@
-# Guestar iOS App (React Native + Flux + HMR + ES2015)
+# Guestar iOS App (React Native + Flux)
 
-Guestar iOS App built with React Native. To get it work follow this steps:
+Guestar iOS App built with React Native + Flux + HMR + ES2015/ES6.
+To get it work follow this steps:
 
     git clone https://github.com/paolorovella/guestar
     cd guestar
@@ -11,9 +12,9 @@ Guestar iOS App built with React Native. To get it work follow this steps:
 
 The starting point of your project is in the folder App, dont forget to update the webpack config file if you change this.
 
-The babel loader is also preconfigured, so you can use full ES6 in your code ;)
+The babel loader is also preconfigured, so you can use full ES2015/ES6 in your code ;)
 
-Make sure you select *Debug in chrome* option (cmd+D) to get HMR
+Make sure you select *Debug in chrome* option (CMD+D) to get HMR
 
 # Use it on your device
 
@@ -35,3 +36,5 @@ You must change the IP address in other two files:
 Connect your iPhone and in XCode press play
 
 # Configure Facebook Login
+
+...
