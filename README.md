@@ -1,7 +1,6 @@
 # Guestar iOS App (React Native + Flux)
 
-Guestar iOS App built with React Native + Flux + HMR + ES2015/ES6.
-To get it work follow this steps:
+Guestar iOS App built with React Native + Flux + HMR + ES2015/ES6.<br />To get it work follow this steps:
 
     git clone https://github.com/paolorovella/guestar
     cd guestar
