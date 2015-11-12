@@ -1,6 +1,6 @@
 # Guestar iOS App (React Native + Flux)
 
-Guestar iOS App built with React Native + Flux + HMR + ES2015/ES6.<br />To get it work follow this steps:
+Guestar iOS App built with React Native + Flux + HMR + Webpack + ES6.<br />To get it work follow this steps:
 
     git clone https://github.com/paolorovella/guestar
     cd guestar
@@ -19,7 +19,7 @@ Make sure you select *Debug in chrome* option (CMD+D) to get HMR
 
 To use this app on your device 
 
-    npm run ios "IP"
+    npm run ios IP
 
 Where IP is the IP address of your Mac. 
 You must change the IP address in other two files:
