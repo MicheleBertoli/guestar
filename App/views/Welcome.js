@@ -39,11 +39,6 @@ class Welcome extends Component {
   componentDidMount() {
     WelcomeStore.addChangeListener(this._onChange);
     GuestarAPI.getArtistsData();
-
-    setTimeout(() => {
-      HomeActions.setLoading(true);
-    }, 1);
-
   }
 
   shouldComponentUpdate(nextProps, nextState) {

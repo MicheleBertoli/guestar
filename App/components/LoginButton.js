@@ -71,7 +71,7 @@ class LoginButton extends Component {
     const _this = this;
     FBLoginManager.getCredentials(function(error, data){
       if (!error) {
-        _this.setState({ user : data});
+        _this.setState({ user : data});        
       }
     });
   }

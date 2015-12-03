@@ -29,13 +29,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount() {
-    setTimeout(() => {
-      HomeActions.setLoading(true);
-    }, 1);
-  }
-
+  
   render() {
     return (
       <View style={styles.container}>

@@ -8,12 +8,15 @@ import React from 'react-native';
 import ArtistStore from '../../stores/ArtistStore';
 import GuestarAPI from '../../utils/GuestarAPI';
 
+import Location from './Location';
+
 let { 
   Component, 
   StyleSheet, 
   Text, 
   Image, 
-  View, 
+  View,
+  TouchableOpacity,
   ScrollView 
 } = React;
 
@@ -37,7 +40,7 @@ class Artist extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.artist !== this.state.artist;
+    return nextState !== this.state;
   }
 
   componentWillUnmount() {
@@ -55,6 +58,14 @@ class Artist extends Component {
           source={{ uri: baseURL + this.state.artist.imageHorizontal }}
           resizeMode={'cover'}
         />
+
+        <TouchableOpacity
+          onPress={() => this._goToLocation()}>
+          <Text
+            style={styles.button}>
+            Invita
+          </Text>          
+        </TouchableOpacity>
 
         <View style={styles.details}>
           <Text style={[styles.text, styles.title]}>
@@ -109,18 +120,36 @@ class Artist extends Component {
     );
   }
 
-  _onChange() {
-    this.setState(_getStateFromStore());
-  }
+  _goToLocation() {
+    this.props.navigator.push({
+      title: 'Seleziona la location',
+      component: Location,
+      passProps: { artist: this.state.artist }
+    });
+  }  
 
   _loadArtistInfo() {
     GuestarAPI.getArtistData(this.props.id);
+  }
+
+  _onChange() {
+    this.setState(_getStateFromStore());
   }
 
 }
 
 let styles = StyleSheet.create({
   container: {},
+  button: {
+    alignSelf: 'center',
+    margin: 10,
+    marginLeft: 0,
+    marginRight: 0,
+    backgroundColor: '#ED253C',
+    color: 'white',
+    padding: 10,
+    borderRadius: 5    
+  },
   details: {
     margin: 20,
     marginBottom: 0
