@@ -5,20 +5,14 @@
 'use strict';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import WelcomeConstants from '../constants/WelcomeConstants';
+import AppConstants from '../constants/AppConstants';
 
-let WelcomeActions = {
+const WelcomeActions = {
 
-  getWelcomeMessage() {
+  setWelcomeData(artists) {
     AppDispatcher.dispatch({
-      actionType: WelcomeConstants.GET_WELCOME_MESSAGE
-    });
-  },
-
-  setWelcomeMessage(message) {
-    AppDispatcher.dispatch({
-      actionType: WelcomeConstants.SET_WELCOME_MESSAGE,
-      message: message
+      actionType: AppConstants.SET_WELCOME_DATA,
+      artists: artists
     });
   }
 

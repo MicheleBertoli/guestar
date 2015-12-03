@@ -5,11 +5,24 @@
 'use strict';
 
 import React from 'react-native';
+import Login from './Login';
 
-let { Component, StyleSheet, ScrollView, View, Text, ActivityIndicatorIOS, SwitchIOS} = React;
-import { TableView, Section, Cell, CustomCell } from 'react-native-tableview-simple';
+import { 
+  TableView, 
+  Section, 
+  Cell, 
+  CustomCell 
+} from 'react-native-tableview-simple';
 
-import Login from '../sections/Login';
+let { 
+  Component, 
+  StyleSheet, 
+  ScrollView, 
+  View, 
+  Text, 
+  ActivityIndicatorIOS, 
+  SwitchIOS
+} = React;
 
 class Settings extends Component {
     
@@ -20,7 +33,7 @@ class Settings extends Component {
 
   goToLogin() {
     this.props.navigator.push({
-      title: "Profilo",
+      title: 'Profilo',
       component: Login
     });
   }
@@ -37,9 +50,24 @@ class Settings extends Component {
 
         <TableView>
           <Section header="STANDARD" footer="A Footer">
-            <Cell cellstyle="Basic" title="Sezione 1" accessory="DisclosureIndicator" onPress={() => console.log('Heyho!')}/>
-            <Cell cellstyle="Basic" title="Sezione 2" accessory="DisclosureIndicator" onPress={() => console.log('Heyho!')}/>
-            <Cell cellstyle="Basic" title="Login" accessory="DisclosureIndicator" onPress={() => this.goToLogin()}/>
+            <Cell 
+              cellstyle="Basic" 
+              title="Sezione 1" 
+              accessory="DisclosureIndicator"
+              onPress={() => console.log('Heyho!')}
+            />
+            <Cell 
+              cellstyle="Basic" 
+              title="Sezione 2" 
+              accessory="DisclosureIndicator" 
+              onPress={() => console.log('Heyho!')}
+            />
+            <Cell 
+              cellstyle="Basic" 
+              title="Login" 
+              accessory="DisclosureIndicator" 
+              onPress={() => this.goToLogin()}
+            />
           </Section>
           <Section header="CUSTOMCELLS">
             <CustomCell>

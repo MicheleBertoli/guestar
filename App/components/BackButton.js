@@ -2,13 +2,20 @@
 
 import React from 'react-native';
 
-let { Component, StyleSheet, TouchableHighlight, Image, Text, View } = React;
+let { 
+  Component, 
+  StyleSheet, 
+  TouchableHighlight, 
+  Image, 
+  Text, 
+  View 
+} = React;
 
 class BackButton extends Component {
   render() {
     return (
       <Image source={require('image!back_button')} style={styles.backButton} />
-    )
+    );
   }
 } 
 

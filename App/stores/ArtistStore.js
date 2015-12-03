@@ -4,54 +4,35 @@
 
 'use strict';
 
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import { EventEmitter }  from 'events';
-import ArtistConstants  from '../constants/ArtistConstants';
-
 import _ from 'lodash';
 
-let CHANGE_EVENT = 'changeArtist';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppConstants  from '../constants/AppConstants';
+import BaseStore from './BaseStore';
 
-let _state = {
+const _state = {
   artist: React.addons.createFragment({})
 };
 
-let ArtistStore = _.assign({}, EventEmitter.prototype, {
+const _setData = data => _state.artist = data;
 
-  getData: function() {
+const ArtistStore = _.assign({}, BaseStore, {
+
+  getData() {
     return _state.artist;
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-  
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-  
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
   }
 
 });
 
-// Register callback to handle all updates
-AppDispatcher.register(function(action) {
+AppDispatcher.register(action => {
 
   switch(action.actionType) {
-
-    case ArtistConstants.SET_ARTIST_DATA:
+    case AppConstants.SET_ARTIST_DATA:
       _setData(action.artist);
       ArtistStore.emitChange();
-    break;
+      break;
   }
 
 });
-
-// Private Functions
-let _setData = (data) => {
-  _state.artist = data;
-};
 
 export default ArtistStore;

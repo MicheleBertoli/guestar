@@ -6,62 +6,38 @@
 
 import React from 'react-native';
 
-import Welcome from '../sections/Welcome';
-import Artist from '../sections/Artist';
-import Event from '../sections/Event';
-import Settings from '../sections/Settings';
-
-let { Component, StyleSheet, NavigatorIOS, TabBarIOS, StatusBarIOS, View } = React;
+let { 
+  Component, 
+  StyleSheet, 
+  NavigatorIOS, 
+  TabBarIOS, 
+  StatusBarIOS, 
+  View 
+} = React;
 
 class Menu extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'welcome'
+      selectedTab: 'first'
     };    
   }
 
-  componentDidMount() {
-    StatusBarIOS.setStyle('light-content');
-  }
-
-  renderSection(firstRoute) {
+  renderSection(route) {
     return (
       <NavigatorIOS
-        initialRoute={firstRoute}
+        initialRoute={route}
         style={styles.header}
         barTintColor='#ED253C'
         tintColor='#FFFFFF'
         titleTextColor='#FFFFFF'        
         translucent={false}
       />
-    )
+    );
   }
 
   render() {
-
-    const firstWelcomeRoute = {
-      title: 'Guestar',
-      component: Welcome
-    }
-    
-    const firstArtistRoute = {
-      title: 'Artista',
-      component: Artist
-    }
-
-    const firstEventRoute = {
-      title: 'Evento',
-      component: Event
-    }
-
-    const firstSettingsRoute = {
-      title: 'Impostazioni',
-      component: Settings,
-      passProps: this.props
-    }
-
     return (
       <TabBarIOS 
         selectedTab={this.state.selectedTab} 
@@ -69,44 +45,44 @@ class Menu extends Component {
         barTintColor="white" 
         style={styles.menu}>
         <TabBarIOS.Item
-          selected={this.state.selectedTab === 'welcome'}
+          selected={this.state.selectedTab === 'first'}
           systemIcon='most-recent'
           onPress={() => {
             this.setState({
-              selectedTab: 'welcome'
+              selectedTab: 'first'
             });
           }}>
-          {this.renderSection(firstWelcomeRoute)}
+          {this.renderSection(this.props.firstRoute)}
         </TabBarIOS.Item>
         <TabBarIOS.Item
-          selected={this.state.selectedTab === 'artist'}
+          selected={this.state.selectedTab === 'second'}
           systemIcon='featured'
           onPress={() => {
             this.setState({
-              selectedTab: 'artist'
+              selectedTab: 'second'
             });
           }}>
-          {this.renderSection(firstArtistRoute)}
+          {this.renderSection(this.props.secondRoute)}
         </TabBarIOS.Item>
         <TabBarIOS.Item
-          selected={this.state.selectedTab === 'event'}
+          selected={this.state.selectedTab === 'third'}
           systemIcon='most-viewed'
           onPress={() => {
             this.setState({
-              selectedTab: 'event'
+              selectedTab: 'third'
             });
           }}>
-          {this.renderSection(firstEventRoute)}
+          {this.renderSection(this.props.thirdRoute)}
         </TabBarIOS.Item>
         <TabBarIOS.Item
-          selected={this.state.selectedTab === 'settings'}
+          selected={this.state.selectedTab === 'fourth'}
           systemIcon='more'
           onPress={() => {
             this.setState({
-              selectedTab: 'settings'
+              selectedTab: 'fourth'
             });
           }}>
-          {this.renderSection(firstSettingsRoute)}
+          {this.renderSection(this.props.fourthRoute)}
         </TabBarIOS.Item>
       </TabBarIOS>
     );

@@ -17,13 +17,15 @@
     "start": "./node_modules/.bin/react-native-webpack-server start",
     "hot": "HOT=1 ./node_modules/.bin/react-native-webpack-server start --hot",
     "ios": "HOT=1 DEVICE=1 ./node_modules/.bin/react-native-webpack-server start --hot --hostname",
-    "bundle": "./node_modules/.bin/react-native-webpack-server bundle"
+    "bundle": "./node_modules/.bin/react-native-webpack-server bundle",
+    "lint": "eslint App"
   },
   "dependencies": {
     "react-native": "^0.14.0",
     "react-native-facebook-login": "^0.6.2",
     "react-native-image-picker": "^0.9.0",
-    "react-native-vector-icons": "^0.8.3"
+    "react-native-tableview-simple": "^0.3.2",
+    "react-native-video": "^0.6.1"
   },
   "devDependencies": {
     "babel": "^5.8.23",
@@ -36,6 +38,7 @@
     "history": "^1.12.5",
     "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
+    "re-base": "^1.2.2",
     "react-native-webpack-server": "paolorovella/react-native-webpack-server#rn-0.14",
     "react-transform-hmr": "^1.0.1",
     "source-map": "^0.5.1",

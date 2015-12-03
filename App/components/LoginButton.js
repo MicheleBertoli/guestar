@@ -1,17 +1,25 @@
 /**
- * Login Component
+ * LoginButton Component
  */
 
 'use strict';
 
 import React from 'react-native';
 import FBLogin from 'react-native-facebook-login';
+import HomeActions from '../actions/HomeActions';
 
-let { Component, StyleSheet, Image, View, Text, TouchableOpacity, NativeModules: { FBLoginManager }} = React;
+let { 
+  Component, 
+  StyleSheet, 
+  AsyncStorage, 
+  Image, 
+  View, 
+  Text, 
+  TouchableOpacity,
+  NativeModules: { FBLoginManager }
+} = React;
 
-import Menu from '../components/Menu';
-
-class Login extends Component {
+class LoginButton extends Component {
     
   constructor(props) {
     super(props);
@@ -22,11 +30,14 @@ class Login extends Component {
 
   handleLogin() {
     const _this = this;
-    FBLoginManager.loginWithPermissions(["email"], function(error, data){
+    FBLoginManager.loginWithPermissions(['email'], function(error, data){
       if (!error) {
-        console.log(data);
         _this.setState({ user : data});
-        _this.props.onLogin && _this.props.onLogin();        
+        _this.props.onLogin && _this.props.onLogin(); 
+        
+        AsyncStorage.setItem('isLogged', 'y');
+        HomeActions.setLogged(true);
+
       } else {
         console.log(error, data);
       }
@@ -39,6 +50,10 @@ class Login extends Component {
       if (!error) {
         _this.setState({ user : null});
         _this.props.onLogout && _this.props.onLogout();
+        
+        AsyncStorage.setItem('isLogged', '');  
+        HomeActions.setLogged(false);
+
       } else {
         console.log(error, data);
       }
@@ -53,25 +68,33 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    const _this = this;    
+    const _this = this;
     FBLoginManager.getCredentials(function(error, data){
       if (!error) {
-        _this.setState({ user : data})
+        _this.setState({ user : data});
       }
     });
   }
 
   render() {
 
-    let text = this.state.user ? "Log out" : "Log in with Facebook";
+    let text = this.state.user ? 'Esci da Facebook' : 'Entra con Facebook';
 
     return (
-      <View style={styles.container}>
+      <View style={[this.props.style, styles.container]}>
         <TouchableOpacity onPress={() => this.onPress()} >
           <View style={styles.FBLoginButton}>
-            <Image style={styles.FBLogo} source={require('image!FB-f-Logo__white_144')} />
-            <Text style={[styles.FBLoginButtonText, this.state.user ? styles.FBLoginButtonTextLoggedIn : styles.FBLoginButtonTextLoggedOut]}
-              numberOfLines={1}>{text}</Text>
+
+            <Image 
+              style={styles.FBLogo} 
+              source={require('image!FB-f-Logo__white_144')} 
+            />
+            <Text 
+              style={styles.FBLoginButtonText}
+              numberOfLines={1}>
+              {text}
+            </Text>
+
           </View>
         </TouchableOpacity>
       </View>
@@ -82,8 +105,7 @@ class Login extends Component {
 
 let styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center'
+    backgroundColor: 'transparent'
   },
   FBLoginButton: {
     flex: 1,
@@ -91,7 +113,6 @@ let styles = StyleSheet.create({
     justifyContent: 'center',
 
     height: 30,
-    marginTop: 60,
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 15,
@@ -114,10 +135,6 @@ let styles = StyleSheet.create({
     fontFamily: 'Helvetica neue',
     fontSize: 14.2,
   },
-  FBLoginButtonTextLoggedIn: {
-  },
-  FBLoginButtonTextLoggedOut: {
-  },
   FBLogo: {
     position: 'absolute',
     height: 14,
@@ -128,4 +145,4 @@ let styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default LoginButton;

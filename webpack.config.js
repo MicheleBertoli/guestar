@@ -19,9 +19,8 @@ var config = {
       include: [
         path.resolve(__dirname, "node_modules/react-native-tableview-simple"),
         path.resolve(__dirname, "node_modules/react-native-facebook-login"),
-        path.resolve(__dirname, "node_modules/react-native-vector-icons"),
         path.resolve(__dirname, "node_modules/react-native-image-picker"),
-        path.resolve(__dirname, "node_modules/react-native-looped-carousel"),
+        path.resolve(__dirname, "node_modules/react-native-video"),
         path.resolve(__dirname, "App")
       ],
       loader: 'babel',

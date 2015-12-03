@@ -6,18 +6,35 @@
 'use strict';
 
 import React from 'react-native';
-let { AppRegistry, StyleSheet, View } = React;
+import Home from './views/Home';
 
-import Menu from './components/Menu';
+const { 
+  AppRegistry, 
+  AsyncStorage,
+  StatusBarIOS,
+  Component, 
+  StyleSheet, 
+  View 
+} = React;
 
-class Application extends React.Component {
+class Application extends Component {
+
+  constructor() {
+    super();
+  }
+
+  componentDidMount() {
+    StatusBarIOS.setStyle('light-content');
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Menu />
+        <Home />
       </View>
     );
   }
+
 };
 
 let styles = StyleSheet.create({

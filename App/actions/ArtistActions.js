@@ -2,20 +2,20 @@
  * ArtistActions
  */
 
-'use strict';
+ 'use strict';
 
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import ArtistConstants from '../constants/ArtistConstants';
+ import AppDispatcher from '../dispatcher/AppDispatcher';
+ import AppConstants from '../constants/AppConstants';
 
-let ArtistActions = {
+ const ArtistActions = {
 
-  setData(data) {
-		AppDispatcher.dispatch({
-  		actionType: ArtistConstants.SET_ARTIST_DATA,
-  		artist: data
-  	});
-  }
-  
-};
+ 	setData(data) {
+ 	  AppDispatcher.dispatch({
+ 		  actionType: AppConstants.SET_ARTIST_DATA,
+ 	    artist: data
+ 		});
+ 	}
 
-export default ArtistActions;
+ };
+
+ export default ArtistActions;

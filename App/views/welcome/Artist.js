@@ -5,11 +5,17 @@
 'use strict';
 
 import React from 'react-native';
-import ArtistStore from '../stores/ArtistStore';
-import ArtistActions from '../actions/ArtistActions';
-import ArtistAPI from '../utils/ArtistAPI';
+import ArtistStore from '../../stores/ArtistStore';
+import GuestarAPI from '../../utils/GuestarAPI';
 
-let { Component, StyleSheet, Text, Image, View, ScrollView } = React;
+let { 
+  Component, 
+  StyleSheet, 
+  Text, 
+  Image, 
+  View, 
+  ScrollView 
+} = React;
 
 function _getStateFromStore() {
   return {
@@ -25,7 +31,7 @@ class Artist extends Component {
     this._onChange = this._onChange.bind(this);  
   }
 
-  componentWillMount() {
+  componentDidMount() {
     ArtistStore.addChangeListener(this._onChange);
     this._loadArtistInfo();
   }
@@ -39,11 +45,14 @@ class Artist extends Component {
   }
 
   render() {
+
+    const baseURL = 'https://guestar.firebaseapp.com/images/';
+
     return (
       <ScrollView style={styles.container} contentInset={{bottom: 64}}>
         <Image
           style={styles.image}
-          source={{uri: 'http://guestar.com/a/artists/10069/image'}}
+          source={{ uri: baseURL + this.state.artist.imageHorizontal }}
           resizeMode={'cover'}
         />
 
@@ -105,7 +114,7 @@ class Artist extends Component {
   }
 
   _loadArtistInfo() {
-    ArtistAPI.getData(10069);
+    GuestarAPI.getArtistData(this.props.id);
   }
 
 }

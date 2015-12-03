@@ -4,54 +4,35 @@
 
 'use strict';
 
-import AppDispatcher from '../dispatcher/AppDispatcher';
-import { EventEmitter }  from 'events';
-import WelcomeConstants  from '../constants/WelcomeConstants';
-
 import _ from 'lodash';
 
-let CHANGE_EVENT = 'changeWelcome';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppConstants  from '../constants/AppConstants';
+import BaseStore from './BaseStore';
 
-let _state = {
-  message: 'Welcome to React Native'
+const _state = {
+  artists: []
 };
 
-let WelcomeStore = _.assign({}, EventEmitter.prototype, {
+const _setArtists = artists => _state.artists = artists;
 
-  getMessage: function() {
-    return _state.message;
-  },
+const WelcomeStore = _.assign({}, BaseStore, {
 
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-  
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-  
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+  getArtists() {
+    return _state.artists;
   }
 
 });
 
-AppDispatcher.register(function(action) {
+AppDispatcher.register(action => {
 
   switch(action.actionType) {
-
-    case WelcomeConstants.SET_WELCOME_MESSAGE:
-      _setStateMessage(action.message);
+    case AppConstants.SET_WELCOME_DATA:
+      _setArtists(action.artists);
       WelcomeStore.emitChange();
-    break;
+      break;
   }
 
 });
-
-let _getStateMessage = () => _state.message;
-
-let _setStateMessage = (message) => {
-  _state.message = message;
-};
 
 export default WelcomeStore;

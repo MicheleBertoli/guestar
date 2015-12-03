@@ -5,7 +5,16 @@
 'use strict';
 
 import React from 'react-native';
-let { Component, StyleSheet, Image, View, Text, TouchableOpacity, NativeModules: { UIImagePickerManager }} = React;
+
+let { 
+  Component, 
+  StyleSheet, 
+  Image, 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  NativeModules: { UIImagePickerManager }
+} = React;
 
 class Event extends Component {
     
@@ -13,7 +22,7 @@ class Event extends Component {
     super(props);
     this.state = {
       avatarSource: null
-    }
+    };
   }
 
   selectImage() {
@@ -42,9 +51,11 @@ class Event extends Component {
           console.log('User tapped custom button: ', response.customButton);
         }
         else {
-          const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-          //const source = {uri: response.uri.replace('file://', ''), isStatic: true};
-
+          const source = {
+            uri: 'data:image/jpeg;base64,' + response.data, 
+            isStatic: true
+          };
+          
           this.setState({
             avatarSource: source
           });
@@ -62,7 +73,11 @@ class Event extends Component {
     return (
       <View style={styles.container}>
 
-        <Image style={styles.avatar} source={this.state.avatarSource} resizeMode={'cover'} />
+        <Image 
+          style={styles.avatar} 
+          source={this.state.avatarSource} 
+          resizeMode={'cover'} 
+        />
 
         <View style={styles.content}>
           <TouchableOpacity onPress={::this.selectImage}>
