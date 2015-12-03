@@ -33,7 +33,3 @@ You must change the IP address in other two files:
 		return [self initWithURL:[RCTConvert NSURL:@"http://IP:8081/debugger-proxy"]];
 
 Connect your iPhone and in XCode press play
-
-# Configure Facebook Login
-
-...
