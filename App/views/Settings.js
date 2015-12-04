@@ -14,7 +14,7 @@ import {
   CustomCell 
 } from 'react-native-tableview-simple';
 
-let { 
+const { 
   Component, 
   StyleSheet, 
   ScrollView, 
@@ -85,7 +85,7 @@ class Settings extends Component {
   }
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: '#EFEFF4',
     paddingBottom: 20

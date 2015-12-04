@@ -6,9 +6,8 @@
 
 import React from 'react-native';
 import FBLogin from 'react-native-facebook-login';
-import HomeActions from '../actions/HomeActions';
 
-let { 
+const { 
   Component, 
   StyleSheet, 
   AsyncStorage, 
@@ -36,7 +35,6 @@ class LoginButton extends Component {
         _this.props.onLogin && _this.props.onLogin(); 
         
         AsyncStorage.setItem('isLogged', 'y');
-        HomeActions.setLogged(true);
 
       } else {
         console.log(error, data);
@@ -52,7 +50,6 @@ class LoginButton extends Component {
         _this.props.onLogout && _this.props.onLogout();
         
         AsyncStorage.setItem('isLogged', '');  
-        HomeActions.setLogged(false);
 
       } else {
         console.log(error, data);
@@ -103,7 +100,7 @@ class LoginButton extends Component {
 
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent'
   },

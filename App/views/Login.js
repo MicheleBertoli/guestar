@@ -8,7 +8,6 @@ import React from 'react-native';
 import Dimensions from 'Dimensions';
 import Video from 'react-native-video';
 
-import HomeActions from '../actions/HomeActions';
 import LoginButton from '../components/LoginButton';
 import Welcome from './Welcome';
 
@@ -67,7 +66,7 @@ class Login extends Component {
   }
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',

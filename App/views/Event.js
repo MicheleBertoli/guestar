@@ -6,7 +6,7 @@
 
 import React from 'react-native';
 
-let { 
+const { 
   Component, 
   StyleSheet, 
   Image, 
@@ -90,7 +90,7 @@ class Event extends Component {
   }
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1
   },

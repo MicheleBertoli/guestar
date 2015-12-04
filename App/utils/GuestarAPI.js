@@ -10,17 +10,17 @@ import ArtistActions from '../actions/ArtistActions';
 
 const base = Rebase.createClass('https://guestar.firebaseio.com');
 
-let GuestarAPI = {
+const GuestarAPI = {
 
   getArtistsData() {
   	base.listenTo('artists', {
 	    context: this,
 	    asArray: true,
-	    queries: {
-	    	orderByChild: 'id'
+	    then(artists) {
+	      WelcomeActions.getArtistsDataSuccess(artists);
 	    },
-	    then(artists){
-	      WelcomeActions.setWelcomeData(artists);
+	    error(error) {
+	    	WelcomeActions.getArtistsDataError(error);
 	    }
 	  });
   },
@@ -30,7 +30,10 @@ let GuestarAPI = {
 	    context: this,
 	    asArray: false,
 	    then(artist){
-	      ArtistActions.setData(artist);
+	      ArtistActions.getArtistDataSuccess(artist);
+	    },
+	    error(error) {
+	    	ArtistActions.getArtistDataError(error);
 	    }
 	  });
   }

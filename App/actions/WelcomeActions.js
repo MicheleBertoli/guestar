@@ -6,13 +6,28 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants from '../constants/AppConstants';
+import GuestarAPI from '../utils/GuestarAPI';
 
 const WelcomeActions = {
 
-  setWelcomeData(artists) {
+	getArtistsData() {
     AppDispatcher.dispatch({
-      actionType: AppConstants.SET_WELCOME_DATA,
+      actionType: AppConstants.GET_ARTISTS_DATA
+    });
+    GuestarAPI.getArtistsData();
+  },
+
+  getArtistsDataSuccess(artists) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_ARTISTS_DATA_SUCCESS,
       artists: artists
+    });
+  },
+
+  getArtistsDataFail(error) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_ARTISTS_DATA_FAIL,
+      artists: error
     });
   }
 

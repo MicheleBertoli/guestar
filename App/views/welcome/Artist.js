@@ -5,12 +5,9 @@
 'use strict';
 
 import React from 'react-native';
-import ArtistStore from '../../stores/ArtistStore';
-import GuestarAPI from '../../utils/GuestarAPI';
-
 import Location from './Location';
 
-let { 
+const { 
   Component, 
   StyleSheet, 
   Text, 
@@ -20,31 +17,13 @@ let {
   ScrollView 
 } = React;
 
-function _getStateFromStore() {
-  return {
-    artist: ArtistStore.getData()
-  };
-}
-
 class Artist extends Component {
     
   constructor(props) {
     super(props);
-    this.state = _getStateFromStore();
-    this._onChange = this._onChange.bind(this);  
-  }
-
-  componentDidMount() {
-    ArtistStore.addChangeListener(this._onChange);
-    this._loadArtistInfo();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState !== this.state;
-  }
-
-  componentWillUnmount() {
-    ArtistStore.removeChangeListener(this._onChange);    
+    this.state = { 
+      artist: this.props.artist 
+    };
   }
 
   render() {
@@ -116,7 +95,7 @@ class Artist extends Component {
             {this.state.artist.bio}
           </Text>
         </View>
-      </ScrollView>
+      </ScrollView>      
     );
   }
 
@@ -126,19 +105,10 @@ class Artist extends Component {
       component: Location,
       passProps: { artist: this.state.artist }
     });
-  }  
-
-  _loadArtistInfo() {
-    GuestarAPI.getArtistData(this.props.id);
   }
-
-  _onChange() {
-    this.setState(_getStateFromStore());
-  }
-
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {},
   button: {
     alignSelf: 'center',

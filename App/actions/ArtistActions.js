@@ -1,21 +1,37 @@
 /*
  * ArtistActions
- */
+*/
 
- 'use strict';
+'use strict';
 
- import AppDispatcher from '../dispatcher/AppDispatcher';
- import AppConstants from '../constants/AppConstants';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppConstants from '../constants/AppConstants';
+import GuestarAPI from '../utils/GuestarAPI';
 
- const ArtistActions = {
 
- 	setData(data) {
- 	  AppDispatcher.dispatch({
- 		  actionType: AppConstants.SET_ARTIST_DATA,
- 	    artist: data
- 		});
- 	}
+const ArtistActions = {
 
- };
+	getArtistData() {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_ARTIST_DATA
+    });
+    GuestarAPI.getArtistData();
+  },
 
- export default ArtistActions;
+  getArtistDataSuccess(artist) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_ARTIST_DATA_SUCCESS,
+      artist: artist
+    });
+  },
+
+  getArtistDataFail(error) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_ARTIST_DATA_FAIL,
+      artist: error
+    });
+  }
+
+};
+
+export default ArtistActions;

@@ -6,7 +6,7 @@
 
 import React from 'react-native';
 
-let { 
+const { 
   Component, 
   StyleSheet, 
   NavigatorIOS, 
@@ -21,7 +21,7 @@ class Menu extends Component {
     super(props);
     this.state = {
       selectedTab: 'first'
-    };    
+    };
   }
 
   renderSection(route) {
@@ -90,7 +90,7 @@ class Menu extends Component {
 
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   menu: {
     position: 'relative',
     backgroundColor: 'white',

@@ -11,23 +11,12 @@ import AppConstants  from '../constants/AppConstants';
 import BaseStore from './BaseStore';
 
 const _state = {
-  isLogged: false,
   isLoading: false
 };
 
-const _setLogged = (isLogged) => {
-  _state.isLogged = isLogged;
-};
-
-const _setLoading = (isLoading) => {
-  _state.isLoading = isLoading;
-};
+const _setLoading = (isLoading) => _state.isLoading = isLoading;
 
 const HomeStore = _.assign({}, BaseStore, {
-
-  isLogged() {
-    return _state.isLogged;
-  },
 
   isLoading() {
     return _state.isLoading;
@@ -38,12 +27,12 @@ const HomeStore = _.assign({}, BaseStore, {
 AppDispatcher.register(action => {
 
   switch(action.actionType) {
-    case AppConstants.SET_LOGGED:
-      _setLogged(action.isLogged);
+    case AppConstants.GET_ARTISTS_DATA:
+      _setLoading(true);
       HomeStore.emitChange();
       break;
-    case AppConstants.SET_LOADING:
-      _setLoading(action.isLoading);
+    case AppConstants.GET_ARTISTS_DATA_SUCCESS:
+      _setLoading(false);
       HomeStore.emitChange();
       break;
   }

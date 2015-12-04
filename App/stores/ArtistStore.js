@@ -14,11 +14,11 @@ const _state = {
   artist: React.addons.createFragment({})
 };
 
-const _setData = data => _state.artist = data;
+const _setArtistData = artist => _state.artist = artist;
 
 const ArtistStore = _.assign({}, BaseStore, {
 
-  getData() {
+  getArtistData() {
     return _state.artist;
   }
 
@@ -27,8 +27,8 @@ const ArtistStore = _.assign({}, BaseStore, {
 AppDispatcher.register(action => {
 
   switch(action.actionType) {
-    case AppConstants.SET_ARTIST_DATA:
-      _setData(action.artist);
+    case AppConstants.GET_ARTIST_DATA_SUCCESS:
+      _setArtistData(action.artist);
       ArtistStore.emitChange();
       break;
   }

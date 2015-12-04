@@ -7,8 +7,6 @@
 import React from 'react-native';
 import WelcomeStore from '../stores/WelcomeStore';
 import WelcomeActions from '../actions/WelcomeActions';
-import HomeActions from '../actions/HomeActions';
-import GuestarAPI from '../utils/GuestarAPI';
 
 import Artist from './welcome/Artist';
 
@@ -38,7 +36,7 @@ class Welcome extends Component {
 
   componentDidMount() {
     WelcomeStore.addChangeListener(this._onChange);
-    GuestarAPI.getArtistsData();
+    WelcomeActions.getArtistsData();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -50,13 +48,6 @@ class Welcome extends Component {
   }
 
   render() {
-
-    if(this.state.artists._cachedRowCount !== 0) {
-      setTimeout(() => {
-        HomeActions.setLoading(false);
-      }, 1);
-    }
-
     return (
       <ListView
         dataSource={this.state.artists}
@@ -97,14 +88,10 @@ class Welcome extends Component {
     this.props.navigator.push({
       title: artist.name,
       component: Artist,
-      passProps: { id: artist.id }
+      passProps: { artist: artist }
     });
   }  
-
-  _reloadList() {
-    GuestarAPI.getArtistsData();
-  }
-
+  
   _onChange() {
     this.setState({
       artists: this.state.artists.cloneWithRows(WelcomeStore.getArtists())
@@ -113,7 +100,7 @@ class Welcome extends Component {
 
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1
   },
