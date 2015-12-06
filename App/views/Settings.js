@@ -5,8 +5,6 @@
 'use strict';
 
 import React from 'react-native';
-import Login from './Login';
-
 import { 
   TableView, 
   Section, 
@@ -28,14 +26,6 @@ class Settings extends Component {
     
   constructor(props) {
     super(props);
-    console.log(props);
-  }
-
-  goToLogin() {
-    this.props.navigator.push({
-      title: 'Profilo',
-      component: Login
-    });
   }
 
   render() {
@@ -64,9 +54,8 @@ class Settings extends Component {
             />
             <Cell 
               cellstyle="Basic" 
-              title="Login" 
+              title="Logout" 
               accessory="DisclosureIndicator" 
-              onPress={() => this.goToLogin()}
             />
           </Section>
           <Section header="CUSTOMCELLS">

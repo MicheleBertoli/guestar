@@ -46,9 +46,15 @@ class Home extends Component {
     AsyncStorage.getItem('isLogged').then((isLogged) => {
       this.setState({ isReady: true });
       if(isLogged === 'y') {
-        this.setState({ isLogged: true });
+        this.setState({ 
+          isLogged: true
+        });
       }
     }).done();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState !== this.state;
   }
 
   componentWillUnmount() {
@@ -59,7 +65,10 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         {this.state.isReady ? 
-          this.state.isLogged ? this._renderMenu() : <Login />          
+          (this.state.isLogged) ? 
+            this._renderMenu() 
+          : 
+            <Login onLogin={() => this._onLogin()} />
         : 
           <Text>Splashscreen</Text>
         }
@@ -89,6 +98,12 @@ class Home extends Component {
         fourthRoute={{ title: 'Impostazioni', component: Settings }}
       />
     );
+  }
+
+  _onLogin() {
+    this.setState({
+      isLogged: true
+    });
   }
 
   _onChange() {

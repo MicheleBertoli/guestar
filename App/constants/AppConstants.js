@@ -5,6 +5,7 @@
 import keyMirror from 'keymirror';
 
 const AppConstants = keyMirror({
+	SET_USER_DATA: null,
 	GET_ARTISTS_DATA: null,
 	GET_ARTISTS_SUCCESS: null,
 	GET_ARTISTS_FAIL: null,

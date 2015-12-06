@@ -8,7 +8,6 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants from '../constants/AppConstants';
 import GuestarAPI from '../utils/GuestarAPI';
 
-
 const ArtistActions = {
 
 	getArtistData() {

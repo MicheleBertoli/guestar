@@ -21,8 +21,8 @@ class Artist extends Component {
     
   constructor(props) {
     super(props);
-    this.state = { 
-      artist: this.props.artist 
+    this.state = {
+      artist: this.props.artist
     };
   }
 
@@ -103,6 +103,11 @@ class Artist extends Component {
     this.props.navigator.push({
       title: 'Seleziona la location',
       component: Location,
+      backButtonTitle: 'Custom Back',
+      // leftButtonTitle: 'Indietro',
+      // onLeftButtonPress: () => this.props.navigator.pop(),
+      // rightButtonTitle: 'Altro',
+      // onRightButtonPress: () => this.props.navigator.pop(),
       passProps: { artist: this.state.artist }
     });
   }
