@@ -36,7 +36,7 @@ class Welcome extends Component {
 
   componentDidMount() {
     WelcomeStore.addChangeListener(this._onChange);
-    WelcomeActions.getArtistsData();
+    setTimeout(() => WelcomeActions.getArtistsData());
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -88,6 +88,7 @@ class Welcome extends Component {
     this.props.navigator.push({
       title: artist.name,
       component: Artist,
+      backButtonTitle: 'Indietro',      
       passProps: { artist: artist }
     });
   }  

@@ -5,7 +5,9 @@
 'use strict';
 
 import React from 'react-native';
+
 import HomeStore from '../stores/HomeStore';
+import LoginActions from '../actions/LoginActions';
 
 import Menu from '../components/Menu';
 import Login from './Login';
@@ -35,20 +37,20 @@ class Home extends Component {
     this.state = {
       isReady: false,
       isLogged: false,
+      user: HomeStore.getUser(),
       isLoading: HomeStore.isLoading()
     };
     this._onChange = this._onChange.bind(this); 
   }
 
   componentDidMount() {
+
     HomeStore.addChangeListener(this._onChange);
 
-    AsyncStorage.getItem('isLogged').then((isLogged) => {
+    AsyncStorage.getItem('accessToken').then((accessToken) => {
       this.setState({ isReady: true });
-      if(isLogged === 'y') {
-        this.setState({ 
-          isLogged: true
-        });
+      if(accessToken && accessToken !== '') {
+        LoginActions.loginUser(accessToken);        
       }
     }).done();
   }
@@ -58,17 +60,22 @@ class Home extends Component {
   }
 
   componentWillUnmount() {
-    HomeStore.removeChangeListener(this._onChange);      
+    HomeStore.removeChangeListener(this._onChange);
   }  
 
   render() {
     return (
       <View style={styles.container}>
-        {this.state.isReady ? 
-          (this.state.isLogged) ? 
-            this._renderMenu() 
-          : 
-            <Login onLogin={() => this._onLogin()} />
+        {this.state.isReady ?      
+          (this.state.user) ?
+            <Menu
+              firstRoute={{ title: 'Guestar', component: Welcome }}
+              secondRoute={{ title: 'News', component: Event }}
+              thirdRoute={{ title: 'Evento', component: Event }}
+              fourthRoute={{ title: 'Impostazioni', component: Settings }}
+            />
+          :    
+            <Login />
         : 
           <Text>Splashscreen</Text>
         }
@@ -89,27 +96,20 @@ class Home extends Component {
     );
   }
 
-  _renderMenu() {
-    return (
-      <Menu 
-        firstRoute={{ title: 'Guestar', component: Welcome }}
-        secondRoute={{ title: 'News', component: Event }}
-        thirdRoute={{ title: 'Evento', component: Event }}
-        fourthRoute={{ title: 'Impostazioni', component: Settings }}
-      />
-    );
-  }
-
-  _onLogin() {
-    this.setState({
-      isLogged: true
-    });
-  }
-
   _onChange() {
+
     this.setState({
-      isLoading: HomeStore.isLoading()
+      isLoading: HomeStore.isLoading(),
+      user: HomeStore.getUser()
     });
+
+    if(this.state.user) {
+      AsyncStorage.setItem(
+        'accessToken',
+        this.state.user.facebook.accessToken
+      );
+    }
+
   }
 }
 

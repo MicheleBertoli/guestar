@@ -5,6 +5,8 @@
 'use strict';
 
 import React from 'react-native';
+import LoginActions from '../actions/LoginActions';
+
 import { 
   TableView, 
   Section, 
@@ -18,8 +20,10 @@ const {
   ScrollView, 
   View, 
   Text, 
+  AsyncStorage,
   ActivityIndicatorIOS, 
-  SwitchIOS
+  SwitchIOS,
+  NativeModules: { FBLoginManager }
 } = React;
 
 class Settings extends Component {
@@ -56,6 +60,7 @@ class Settings extends Component {
               cellstyle="Basic" 
               title="Logout" 
               accessory="DisclosureIndicator" 
+              onPress={() => this._logoutUser()}
             />
           </Section>
           <Section header="CUSTOMCELLS">
@@ -71,6 +76,17 @@ class Settings extends Component {
         </TableView>
       </ScrollView>
     );
+  }
+
+  _logoutUser() {
+    FBLoginManager.logout(function(error, data){
+      if (!error) {
+        AsyncStorage.removeItem('accessToken'); 
+        LoginActions.logoutUser();   
+      } else {
+        console.log(error, data);
+      }
+    });
   }
 }
 

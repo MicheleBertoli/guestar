@@ -5,7 +5,7 @@
 'use strict';
 
 import React from 'react-native';
-import Location from './Location';
+import Locations from './Locations';
 
 const { 
   Component, 
@@ -38,15 +38,16 @@ class Artist extends Component {
           resizeMode={'cover'}
         />
 
-        <TouchableOpacity
-          onPress={() => this._goToLocation()}>
-          <Text
-            style={styles.button}>
-            Invita
-          </Text>          
-        </TouchableOpacity>
-
         <View style={styles.details}>
+
+          <TouchableOpacity
+            onPress={() => this._goToLocation()}>
+            <Text
+              style={styles.button}>
+              Invita al tuo evento
+            </Text>          
+          </TouchableOpacity>
+
           <Text style={[styles.text, styles.title]}>
             Componenti:
             <Text style={styles.text}>
@@ -87,11 +88,9 @@ class Artist extends Component {
             <Text style={styles.text}>
               {this.state.artist.overnight}
             </Text>
-          </Text>  
-        </View>
+          </Text>
 
-        <View style={styles.bio}>
-          <Text style={styles.text}>
+          <Text style={[styles.text, styles.bio]}>
             {this.state.artist.bio}
           </Text>
         </View>
@@ -101,11 +100,8 @@ class Artist extends Component {
 
   _goToLocation() {
     this.props.navigator.push({
-      title: 'Seleziona la location',
-      component: Location,
-      backButtonTitle: 'Custom Back',
-      // leftButtonTitle: 'Indietro',
-      // onLeftButtonPress: () => this.props.navigator.pop(),
+      title: 'Locations',
+      component: Locations,
       // rightButtonTitle: 'Altro',
       // onRightButtonPress: () => this.props.navigator.pop(),
       passProps: { artist: this.state.artist }
@@ -114,15 +110,18 @@ class Artist extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1
+  },
   button: {
-    alignSelf: 'center',
-    margin: 10,
-    marginLeft: 0,
-    marginRight: 0,
+    flex: 1,
+    flexDirection: 'row',    
+    alignItems: 'center',
+    textAlign: 'center',
     backgroundColor: '#ED253C',
     color: 'white',
     padding: 10,
+    marginBottom: 20,
     borderRadius: 5    
   },
   details: {
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   bio: {
-    margin: 20
+    marginTop: 20
   },
   title: {
     fontWeight: 'bold'

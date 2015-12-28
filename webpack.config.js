@@ -20,7 +20,9 @@ var config = {
         path.resolve(__dirname, "node_modules/react-native-tableview-simple"),
         path.resolve(__dirname, "node_modules/react-native-facebook-login"),
         path.resolve(__dirname, "node_modules/react-native-image-picker"),
+        path.resolve(__dirname, "node_modules/react-native-google-places-autocomplete"),
         path.resolve(__dirname, "node_modules/react-native-video"),
+        path.resolve(__dirname, "node_modules/tcomb-form-native"),
         path.resolve(__dirname, "App")
       ],
       loader: 'babel',
@@ -28,8 +30,12 @@ var config = {
         stage: 0,
         plugins: []   
       }
+    },
+    {
+      test: /\.(png|jpg)$/, 
+      loader: 'url-loader?limit=8192'
     }]
-  },  
+  },
 
   plugins: []
 };

@@ -6,14 +6,27 @@
 
 import Rebase from 're-base';
 import WelcomeActions from '../actions/WelcomeActions';
+import LoginActions from '../actions/LoginActions';
 import ArtistActions from '../actions/ArtistActions';
 
 const base = Rebase.createClass('https://guestar.firebaseio.com');
+let listenToArtist;
 
 const GuestarAPI = {
 
+  loginUser(token) {
+    base.authWithOAuthToken('facebook', token, function(error, authData) {
+      if (error) {
+        LoginActions.loginUserFail(error);
+      } else {
+        console.log(authData);
+        LoginActions.loginUserSuccess(authData);        
+      }
+    });
+  },
+
   getArtistsData() {
-  	base.listenTo('artists', {
+  	listenToArtist = base.listenTo('artists', {
 	    context: this,
 	    asArray: true,
 	    then(artists) {
@@ -36,6 +49,11 @@ const GuestarAPI = {
 	    	ArtistActions.getArtistDataError(error);
 	    }
 	  });
+  },
+
+  logoutUser() {
+    base.removeBinding(listenToArtist);
+    LoginActions.logoutUserSuccess(); 
   }
 	
 };

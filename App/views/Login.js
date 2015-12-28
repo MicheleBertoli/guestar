@@ -8,6 +8,8 @@ import React from 'react-native';
 import FBLogin from 'react-native-facebook-login';
 import Video from 'react-native-video';
 
+import LoginActions from '../actions/LoginActions';
+
 const { 
   Component, 
   StyleSheet,
@@ -28,66 +30,13 @@ const {
 class Login extends Component {
     
   constructor(props) {
-    super(props);
+    super(props);   
     this.state = {
       user: null
-    };    
-  }
-
-  handleLogin() {
-    const _this = this;
-    FBLoginManager.loginWithPermissions(['email'], function(error, data){
-      if (!error) {
-        _this.setState({ user : data});
-        _this.props.onLogin && _this.props.onLogin(); 
-        
-        AsyncStorage.setItem('isLogged', 'y');
-        AsyncStorage.setItem('user', data.credentials.userId);
-        AsyncStorage.setItem('token', data.credentials.token);
-
-      } else {
-        console.log(error, data);
-      }
-    });
-  }
-
-  handleLogout() {
-    const _this = this;
-    FBLoginManager.logout(function(error, data){
-      if (!error) {
-        _this.setState({ user : null});
-        _this.props.onLogout && _this.props.onLogout();
-        
-        AsyncStorage.setItem('isLogged', '');
-        AsyncStorage.setItem('user', '');
-        AsyncStorage.setItem('token', '');
-
-      } else {
-        console.log(error, data);
-      }
-    });
-  }
-
-  onPress() {
-    this.state.user
-      ? this.handleLogout()
-      : this.handleLogin();
-    this.props.onPress && this.props.onPress();
-  }
-
-  componentWillMount() {
-    const _this = this;
-    FBLoginManager.getCredentials(function(error, data){
-      if (!error) {
-        _this.setState({ user : data});
-      }
-    });
+    };
   }
 
   render() {
-
-    let text = this.state.user ? 'Esci da Facebook' : 'Entra con Facebook';
-
     return (
 
       <View style={styles.container}>
@@ -115,7 +64,7 @@ class Login extends Component {
 
         <TouchableOpacity 
           style={styles.button}
-          onPress={() => this.onPress()}>
+          onPress={() => this._handleLogin()}>
           <View style={styles.FBLoginButton}>
             <Image 
               style={styles.FBLogo} 
@@ -124,7 +73,7 @@ class Login extends Component {
             <Text 
               style={styles.FBLoginButtonText}
               numberOfLines={1}>
-              {text}
+              Entra con Facebook
             </Text>
           </View>
         </TouchableOpacity>        
@@ -132,6 +81,17 @@ class Login extends Component {
     );
   }
 
+  _handleLogin() {
+    const _this = this;
+    FBLoginManager.loginWithPermissions(['email'], function(error, data){
+      if (!error) {
+        _this.setState({ user: data });
+        LoginActions.loginUser(data.credentials.token);
+      } else {
+        console.log(error, data);
+      }
+    });
+  }
 }
 
 const styles = StyleSheet.create({
