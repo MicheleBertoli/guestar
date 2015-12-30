@@ -1,5 +1,5 @@
 /**
- * Map Component
+ * MapBox component
  */
 
 'use strict';
@@ -13,7 +13,7 @@ const {
   View 
 } = React;
 
-class MapComponent extends Component {
+class MapBox extends Component {
 
   constructor(props) {
     super(props);    
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MapComponent;
+export default MapBox;

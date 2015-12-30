@@ -25,6 +25,11 @@ const GuestarAPI = {
     });
   },
 
+  logoutUser() {
+    base.removeBinding(listenToArtist);
+    LoginActions.logoutUserSuccess();
+  },
+
   getArtistsData() {
   	listenToArtist = base.listenTo('artists', {
 	    context: this,
@@ -51,9 +56,8 @@ const GuestarAPI = {
 	  });
   },
 
-  logoutUser() {
-    base.removeBinding(listenToArtist);
-    LoginActions.logoutUserSuccess(); 
+  createLocation(locationData) {
+
   }
 	
 };

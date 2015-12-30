@@ -5,7 +5,6 @@
 'use strict';
 
 import React from 'react-native';
-
 import HomeStore from '../../stores/HomeStore';
 import NewLocation from './NewLocation';
 
@@ -42,7 +41,9 @@ class Locations extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container} contentInset={{bottom: 64}}>
+      <ScrollView 
+        style={styles.container}
+        contentInset={{bottom: 64}}>
         <View style={styles.details}>
           <Text style={styles.text}>
             Location
@@ -61,10 +62,11 @@ class Locations extends Component {
 
   _newLocation() {
     this.props.navigator.push({
-      title: 'Crea una location',
+      title: 'Nuova location',
       component: NewLocation,
       passProps: { 
-        artist: this.props.artist
+        artist: this.props.artist,
+        user: this.state.user
       }
     });
   }
