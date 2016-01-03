@@ -5,6 +5,7 @@
 'use strict';
 
 import React from 'react-native';
+import _ from 'lodash';
 
 const { 
   Component,
@@ -53,13 +54,13 @@ class Select extends Component {
                   this._changeValue(selected);
                 }}
                 style={{width: 300}}>
-                {this.data.map((val) => (
+                {this.data.map((val) =>
                   <PickerIOS.Item
                     value={val}
                     key={val}
                     label={val.toString()}
                   />
-                ))}
+                )}
               </PickerIOS>     
               <TouchableOpacity
                 style={styles.button}

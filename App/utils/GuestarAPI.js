@@ -57,7 +57,7 @@ const GuestarAPI = {
   },
 
   createLocation(locationData) {
-
+    
   }
 	
 };

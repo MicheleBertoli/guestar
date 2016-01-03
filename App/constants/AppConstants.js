@@ -15,7 +15,10 @@ const AppConstants = keyMirror({
 	GET_ARTISTS_FAIL: null,
 	GET_ARTIST_DATA: null,
 	GET_ARTIST_SUCCESS: null,
-	GET_ARTIST_FAIL: null
+	GET_ARTIST_FAIL: null,
+  CREATE_LOCATION: null,
+  CREATE_LOCATION_SUCCESS: null,
+  CREATE_LOCATION_FAIL: null,
 });
 
 export default AppConstants;

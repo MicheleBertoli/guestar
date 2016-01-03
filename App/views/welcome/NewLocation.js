@@ -5,6 +5,7 @@
 'use strict';
 
 import React from 'react-native';
+import Helpers from '../../utils/Helpers';
 import LocationActions from '../../actions/LocationActions';
 
 import Select from '../../components/Select';
@@ -24,29 +25,29 @@ const {
   ScrollView 
 } = React;
 
-const tipologia = [
-  'Villa/Casa singola',
-  'Appartamento',
-  'Villetta multifamiliare',
-  'Stabile/magazzino'
-];
+const tipologia = {
+  'mansion' : 'Villa/Casa singola',
+  'apartment' : 'Appartamento',
+  'multifamily' : 'Villetta multifamiliare',
+  'warehouse' : 'Stabile/magazzino'
+};
 
-const spazio = [
-  'Meno di 20mq',
-  'Da 20mq a 40mq',
-  'Da 40mq a 60mq',
-  'Da 60mq a 100mq',
-  'Oltre 100mq'
-];
+const spazio = {
+  '<20' : 'Meno di 20mq',
+  '20-40' : 'Da 20mq a 40mq',
+  '40-60' : 'Da 40mq a 60mq',
+  '60-100' : 'Da 60mq a 100mq',
+  '>100' : 'Oltre 100mq'
+};
 
-const persone = [
-  'Fino a 10 persone',
-  'Da 10 a 20 persone',
-  'Da 20 a 30 persone',
-  'Da 30 a 40 persone',
-  'Da 40 a 50 persone',
-  'Oltre 50 persone'
-];
+const persone = {
+  '<=10' : 'Fino a 10 persone',
+  '10-20' : 'Da 10 a 20 persone',
+  '20-30' : 'Da 20 a 30 persone',
+  '30-40' : 'Da 30 a 40 persone',
+  '40-50' : 'Da 40 a 50 persone',
+  '>50' : 'Oltre 50 persone'
+};
 
 class NewLocation extends Component {
     
@@ -69,6 +70,7 @@ class NewLocation extends Component {
   render() {
     return (
       <ScrollView 
+        ref='scrollView'
         style={styles.container}
         contentInset={{ bottom: 64 }}
         keyboardDismissMode={'on-drag'}>
@@ -94,8 +96,21 @@ class NewLocation extends Component {
             />
           </View>
           <View style={styles.section}>
+            <TextInput 
+              placeholder='Descrizione'
+              multiline={true}
+              onFocus={() => {
+                this.refs.scrollView.getScrollResponder().scrollTo(100);
+              }}
+              onChangeText={(descrizione) => {
+                this.setState({descrizione: descrizione});
+              }}
+              style={styles.descriptionText}
+            />
+          </View>
+          <View style={styles.section}>
             <Select 
-              data={tipologia}
+              data={Object.keys(tipologia).map(key => tipologia[key])}
               placeholder='Tipologia'
               selected={(selected) => {
                 this.setState({
@@ -106,7 +121,7 @@ class NewLocation extends Component {
           </View>
           <View style={styles.section}>
             <Select 
-              data={spazio}
+              data={Object.keys(spazio).map(key => spazio[key])}
               placeholder='Spazio a disposizione'
               selected={(selected) => {
                 this.setState({
@@ -117,7 +132,7 @@ class NewLocation extends Component {
           </View>
           <View style={styles.section}>
             <Select 
-              data={persone}
+              data={Object.keys(persone).map(key => persone[key])}
               placeholder='Numero max di persone'
               selected={(selected) => {
                 this.setState({
@@ -153,26 +168,49 @@ class NewLocation extends Component {
   }
 
   _createLocation() {
-    if(this.state.nome && this.state.tipologia && 
-      this.state.spazio && this.state.persone &&
-      this.state.isRegionSelected) {
-      console.log('Nome: ' + this.state.nome);
-      console.log('Tipologia: ' + this.state.tipologia);
-      console.log('Spazio: ' + this.state.spazio);
-      console.log('Persone: ' + this.state.persone);
+
+    if(this.state.nome && this.state.description && this.state.tipologia && 
+      this.state.spazio && this.state.persone && this.state.isRegionSelected) {
+      
+      const type = Helpers.getKeyByValue(tipologia, this.state.tipologia);
+      const space = Helpers.getKeyByValue(spazio, this.state.spazio);
+      const people = Helpers.getKeyByValue(persone, this.state.persone);
+
+      const locationData = {
+        name: this.state.nome,
+        description: this.state.description,
+        type: type,
+        space: space,
+        people: people,
+        location: {
+          lat: this.state.region.latitude,
+          lng: this.state.region.longitude
+        }
+      };
+
+      // LocationActions.createLocation(locationData);
     }
+    else {
+      let message = '';
 
-    // (this.state.isRegionSelected) ?
-    //   console.log(this.state.region)
-    // :
-    //   AlertIOS.alert(
-    //     'Guestar', 
-    //     'Inserisci una via 😊', 
-    //     [{text: 'OK'}], 
-    //     'default'
-    //   );
+      if(!this.state.nome) 
+        message += '- Nome della location\n';
+      if(!this.state.isRegionSelected) 
+        message += '- Indirizzo della location\n';      
+      if(!this.state.tipologia) 
+        message += '- Tipologia della location\n';
+      if(!this.state.spazio) 
+        message += '- Spazio a disposizione\n';
+      if(!this.state.persone) 
+        message += '- Numero massimo di persone';      
 
-    //LocationActions.createLocation();
+      AlertIOS.alert(
+        'Guestar', 
+        'Hey amico 😊\nHai dimenticato questi dati:\n\n' + message, 
+        [{text: 'OK'}], 
+        'default'
+      );
+    }    
   }
 }
 
@@ -210,8 +248,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 20,
     paddingBottom: 10,
-    paddingLeft: 20,
-    height: 60
+    paddingLeft: 20
   },
   section: {
     borderBottomWidth: 1,
@@ -219,8 +256,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 20,
     paddingBottom: 10,
-    paddingLeft: 20,
-    height: 60
+    paddingLeft: 20
   },
   modalContainer: {
     position: 'absolute',
@@ -238,7 +274,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   formText: {
-    height: 40
+    height: 40,
+    fontSize: 17
+  },
+  descriptionText: {
+    height: 80,
+    fontSize: 17
   },
   tipologiaButton: {
     fontSize: 15,
