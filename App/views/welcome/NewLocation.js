@@ -6,9 +6,12 @@
 
 import React from 'react-native';
 import Helpers from '../../utils/Helpers';
+
 import LocationActions from '../../actions/LocationActions';
+import LocationStore from '../../stores/LocationStore';
 
 import Select from '../../components/Select';
+import SelectImage from '../../components/SelectImage';
 import MapBox from '../../components/MapBox';
 import MapTextInput from '../../components/MapTextInput';
 
@@ -59,12 +62,29 @@ class NewLocation extends Component {
       region: {
         latitude: 40.941728,
         longitude: 3.5839248
-      }
+      },
+      locationCreated: LocationStore.isLocationCreated()
     };
+
+    this._onChange = this._onChange.bind(this);
+  }
+
+  componentDidMount() {
+    LocationStore.addChangeListener(this._onChange);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.isLocationCreated !== this.state.isLocationCreated) {
+      this._confirmAndGetBack();
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState !== this.state;
+  }
+
+  componentWillUnmount() {
+    LocationStore.removeChangeListener(this._onChange);
   }
 
   render() {
@@ -141,6 +161,16 @@ class NewLocation extends Component {
               }}
             />
           </View>
+          <View style={styles.section}>
+            <SelectImage 
+              placeholder='Immagine'
+              selected={(selected) => {
+                this.setState({
+                  immagine: selected
+                });
+              }}
+            />
+          </View>
           <TouchableOpacity 
             style={styles.button} 
             onPress={() => this._createLocation()} 
@@ -163,54 +193,82 @@ class NewLocation extends Component {
         longitude: details.geometry.location.lng,
         animateDrop: true
       }],
+      indirizzo: data.description,
       isRegionSelected: true           
     });
   }
 
   _createLocation() {
 
-    if(this.state.nome && this.state.description && this.state.tipologia && 
-      this.state.spazio && this.state.persone && this.state.isRegionSelected) {
+    if(this.state.nome && this.state.descrizione && this.state.tipologia && 
+      this.state.spazio && this.state.persone && this.state.immagine 
+      && this.state.isRegionSelected) {
       
       const type = Helpers.getKeyByValue(tipologia, this.state.tipologia);
       const space = Helpers.getKeyByValue(spazio, this.state.spazio);
       const people = Helpers.getKeyByValue(persone, this.state.persone);
 
       const locationData = {
+        uid: this.state.user.uid,
         name: this.state.nome,
-        description: this.state.description,
+        description: this.state.descrizione,
+        address: this.state.indirizzo,
         type: type,
         space: space,
         people: people,
+        image: this.state.immagine.uri,
         location: {
           lat: this.state.region.latitude,
           lng: this.state.region.longitude
         }
       };
 
-      // LocationActions.createLocation(locationData);
+      LocationActions.createLocation(locationData);
     }
     else {
       let message = '';
 
       if(!this.state.nome) 
         message += '- Nome della location\n';
+      if(!this.state.descrizione) 
+        message += '- Descrizione della location\n';   
       if(!this.state.isRegionSelected) 
         message += '- Indirizzo della location\n';      
+      if(!this.state.immagine) 
+        message += '- Immagine della location\n';              
       if(!this.state.tipologia) 
         message += '- Tipologia della location\n';
       if(!this.state.spazio) 
         message += '- Spazio a disposizione\n';
       if(!this.state.persone) 
-        message += '- Numero massimo di persone';      
+        message += '- Numero massimo di persone';        
 
       AlertIOS.alert(
         'Guestar', 
-        'Hey amico 😊\nHai dimenticato questi dati:\n\n' + message, 
+        'Hey amico/a 😊\nHai dimenticato questi dati:\n\n' + message, 
         [{text: 'OK'}], 
         'default'
       );
     }    
+  }
+
+  _confirmAndGetBack() {
+    AlertIOS.alert(
+      'Guestar', 
+      'Location creata! 😊', 
+      [{
+        text: 'OK', 
+        onPress: (text) => 
+          this.props.navigator.pop()
+      }], 
+      'default'
+    );
+  }
+
+  _onChange() {
+    this.setState({
+      isLocationCreated: LocationStore.isLocationCreated()
+    });
   }
 }
 
@@ -227,7 +285,7 @@ const styles = StyleSheet.create({
     lineHeight: 24
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 15,
     color: 'white',
     alignSelf: 'center'
   },
@@ -282,8 +340,8 @@ const styles = StyleSheet.create({
     fontSize: 17
   },
   tipologiaButton: {
-    fontSize: 15,
     color: 'white',
+    fontSize: 15,
     alignSelf: 'center',
     paddingLeft: 20,
     paddingRight: 20

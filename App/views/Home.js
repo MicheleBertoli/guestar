@@ -69,7 +69,7 @@ class Home extends Component {
         {this.state.isReady ?      
           (this.state.user) ?
             <Menu
-              firstRoute={{ title: 'Guestar', component: Welcome }}
+              firstRoute={{ title: 'Home', component: Welcome }}
               secondRoute={{ title: 'News', component: Event }}
               thirdRoute={{ title: 'Evento', component: Event }}
               fourthRoute={{ title: 'Impostazioni', component: Settings }}

@@ -10,23 +10,23 @@ import GuestarAPI from '../utils/GuestarAPI';
 
 const WelcomeActions = {
 
-	getArtistsData() {
+	getArtists() {
     AppDispatcher.dispatch({
-      actionType: AppConstants.GET_ARTISTS_DATA
+      actionType: AppConstants.GET_ARTISTS
     });
-    GuestarAPI.getArtistsData();
+    GuestarAPI.getArtists();
   },
 
-  getArtistsDataSuccess(artists) {
+  getArtistsSuccess(artists) {
     AppDispatcher.dispatch({
-      actionType: AppConstants.GET_ARTISTS_DATA_SUCCESS,
+      actionType: AppConstants.GET_ARTISTS_SUCCESS,
       artists: artists
     });
   },
 
-  getArtistsDataFail(error) {
+  getArtistsFail(error) {
     AppDispatcher.dispatch({
-      actionType: AppConstants.GET_ARTISTS_DATA_FAIL,
+      actionType: AppConstants.GET_ARTISTS_FAIL,
       artists: error
     });
   }

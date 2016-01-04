@@ -5,8 +5,9 @@
 'use strict';
 
 import React from 'react-native';
-import HomeStore from '../../stores/HomeStore';
-import NewLocation from './NewLocation';
+
+import LocationStore from '../../stores/LocationStore';
+import LocationActions from '../../actions/LocationActions';
 
 const { 
   Component, 
@@ -14,91 +15,115 @@ const {
   Text, 
   TouchableOpacity,
   View,
-  ScrollView 
+  Image,
+  ListView 
 } = React;
 
 class Locations extends Component {
     
   constructor(props) {
-    super(props); 
+    super(props);
+    const dataSource = new ListView.DataSource(
+      {rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      user: HomeStore.getUser()
+      locations: dataSource.cloneWithRows(LocationStore.getLocations())
     };
     this._onChange = this._onChange.bind(this);
   }
 
   componentDidMount() {
-    HomeStore.addChangeListener(this._onChange);
+    LocationStore.addChangeListener(this._onChange);
+    LocationActions.getLocations();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState !== this.state;
+    return nextState.locations !== this.state.locations;
   }
 
   componentWillUnmount() {
-    HomeStore.removeChangeListener(this._onChange);
+    LocationActions.removeLocationsBinding();
+    LocationStore.removeChangeListener(this._onChange);
   }
 
   render() {
     return (
-      <ScrollView 
-        style={styles.container}
-        contentInset={{bottom: 64}}>
-        <View style={styles.details}>
-          <Text style={styles.text}>
-            Location
-          </Text>
-          <TouchableOpacity
-            onPress={() => this._newLocation()}>
-            <Text
-              style={styles.button}>
-              Crea una nuova location
-            </Text>          
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <ListView
+        dataSource={this.state.locations}
+        renderRow={(rowData) => this._getLocationsInfo(rowData)}
+        contentInset={{ bottom: 64 }}  
+      />
     );
   }
 
-  _newLocation() {
-    this.props.navigator.push({
-      title: 'Nuova location',
-      component: NewLocation,
-      passProps: { 
-        artist: this.props.artist,
-        user: this.state.user
-      }
-    });
+  _getLocationsInfo(location) {  
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => console.log('Location pressed!')}>
+          <Image 
+            style={styles.image}
+            source={{ uri: location.image }}
+          />
+          <View style={styles.textContainer}>
+            <Text
+              style={[styles.text, styles.name]}>
+              {location.name}
+            </Text>
+            <Text
+              style={[styles.text, styles.address]}>
+              {location.address}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>     
+    );
   }
-
+  
   _onChange() {
     this.setState({
-      user: HomeStore.getUser()
+      locations: this.state.locations.cloneWithRows(
+        LocationStore.getLocations()
+      )
     });
   }
 }
 
 const styles = StyleSheet.create({
-  container: {},
   text: {
     fontSize: 16,
     fontWeight: 'normal',
     lineHeight: 24
   },
   details: {
+    flex: 1,
+    alignItems: 'center',
+    textAlign: 'center',
     margin: 20,
     marginBottom: 0
   },
-  button: {
-    flex: 1,
-    flexDirection: 'row',    
-    alignItems: 'center',
-    textAlign: 'center',
-    backgroundColor: '#ED253C',
-    color: 'white',
-    padding: 10,
-    marginTop: 20,
-    borderRadius: 5
+  image: {
+    height: 150
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    alignItems: 'flex-end',
+    backgroundColor: 'transparent'
+  },
+  text: {
+    fontSize: 16,
+    color: '#fff',
+    shadowColor: '#666',
+    shadowRadius: 3,
+    shadowOpacity: 100,
+    shadowOffset: { width: 1, height : 1}
+  },
+  name: {
+    fontSize: 30
+  },
+  address: {
+    fontSize: 16
   }
 });
 

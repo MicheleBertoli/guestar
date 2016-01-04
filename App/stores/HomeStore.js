@@ -52,11 +52,27 @@ AppDispatcher.register(action => {
       _setUser(null);
       HomeStore.emitChange();
       break;  
-    case AppConstants.GET_ARTISTS_DATA:
+    case AppConstants.GET_ARTISTS:
       _setLoading(true);
       HomeStore.emitChange();
       break;
-    case AppConstants.GET_ARTISTS_DATA_SUCCESS:
+    case AppConstants.GET_ARTISTS_SUCCESS:
+      _setLoading(false);
+      HomeStore.emitChange();
+      break;
+    case AppConstants.GET_LOCATIONS:
+      _setLoading(true);
+      HomeStore.emitChange();
+      break;
+    case AppConstants.GET_LOCATIONS_SUCCESS:
+      _setLoading(false);
+      HomeStore.emitChange();
+      break;
+    case AppConstants.CREATE_LOCATION:
+      _setLoading(true);
+      HomeStore.emitChange();
+      break;
+    case AppConstants.CREATE_LOCATION_SUCCESS:
       _setLoading(false);
       HomeStore.emitChange();
       break;

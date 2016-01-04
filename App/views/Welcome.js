@@ -36,7 +36,7 @@ class Welcome extends Component {
 
   componentDidMount() {
     WelcomeStore.addChangeListener(this._onChange);
-    setTimeout(() => WelcomeActions.getArtistsData());
+    setTimeout(() => WelcomeActions.getArtists());
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -95,7 +95,9 @@ class Welcome extends Component {
   
   _onChange() {
     this.setState({
-      artists: this.state.artists.cloneWithRows(WelcomeStore.getArtists())
+      artists: this.state.artists.cloneWithRows(
+        WelcomeStore.getArtists()
+      )
     });
   }
 
@@ -128,10 +130,6 @@ const styles = StyleSheet.create({
   },
   genre: {
     fontSize: 16
-  },
-  loading: {
-    marginTop: 50,
-    alignItems: 'center'
   }
 });
 

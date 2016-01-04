@@ -35,7 +35,6 @@ class Select extends Component {
         <TouchableOpacity
           onPress={() => this._setModalVisible(true)}>
           <TextInput
-            name={this.props.ref}
             editable={false}
             placeholder={this.props.placeholder}
             style={styles.formText}
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDD',
     borderTopWidth: 1,
     borderTopColor: '#CCC',
-    opacity: 0.95
+    opacity: 0.98
   },
   modalInnerContainer: {
     alignItems: 'center'

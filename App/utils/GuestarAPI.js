@@ -8,9 +8,10 @@ import Rebase from 're-base';
 import WelcomeActions from '../actions/WelcomeActions';
 import LoginActions from '../actions/LoginActions';
 import ArtistActions from '../actions/ArtistActions';
+import LocationActions from '../actions/LocationActions';
 
 const base = Rebase.createClass('https://guestar.firebaseio.com');
-let listenToArtist;
+let artists, locations;
 
 const GuestarAPI = {
 
@@ -20,44 +21,67 @@ const GuestarAPI = {
         LoginActions.loginUserFail(error);
       } else {
         console.log(authData);
-        LoginActions.loginUserSuccess(authData);        
+        LoginActions.loginUserSuccess(authData);
       }
     });
   },
 
   logoutUser() {
-    base.removeBinding(listenToArtist);
+    base.removeBinding(artists);
+    base.removeBinding(locations);
     LoginActions.logoutUserSuccess();
   },
 
-  getArtistsData() {
-  	listenToArtist = base.listenTo('artists', {
+  getArtists() {
+  	artists = base.listenTo('artists', {
 	    context: this,
 	    asArray: true,
 	    then(artists) {
-	      WelcomeActions.getArtistsDataSuccess(artists);
+	      WelcomeActions.getArtistsSuccess(artists);
 	    },
 	    error(error) {
-	    	WelcomeActions.getArtistsDataError(error);
+	    	WelcomeActions.getArtistsError(error);
 	    }
 	  });
   },
 
-  getArtistData(id) {
+  getArtist(id) {
   	base.fetch('artists/' + id, {
 	    context: this,
 	    asArray: false,
 	    then(artist){
-	      ArtistActions.getArtistDataSuccess(artist);
+	      ArtistActions.getArtistSuccess(artist);
 	    },
 	    error(error) {
-	    	ArtistActions.getArtistDataError(error);
+	    	ArtistActions.getArtistError(error);
 	    }
 	  });
   },
 
+  getLocations() {
+    locations = base.listenTo('locations', {
+      context: this,
+      asArray: true,
+      then(locations) {
+        LocationActions.getLocationsSuccess(locations);
+      },
+      error(error) {
+        LocationActions.getLocationsError(error);
+      }
+    });
+  },
+
   createLocation(locationData) {
-    
+    base.push('locations', {
+      data: locationData,
+      then(){
+        LocationActions.createLocationSuccess();
+      }
+    });
+  },
+
+  removeLocationsBinding() {
+    base.removeBinding(locations);
   }
 	
 };

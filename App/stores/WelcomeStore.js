@@ -27,7 +27,7 @@ const WelcomeStore = _.assign({}, BaseStore, {
 AppDispatcher.register(action => {
 
   switch(action.actionType) {
-    case AppConstants.GET_ARTISTS_DATA_SUCCESS:
+    case AppConstants.GET_ARTISTS_SUCCESS:
       _setArtists(action.artists);
       WelcomeStore.emitChange();
       break;

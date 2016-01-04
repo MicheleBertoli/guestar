@@ -27,13 +27,13 @@ class Menu extends Component {
   renderSection(route) {
     return (
       <NavigatorIOS
-      initialRoute={route}
-      style={styles.header}
-      barTintColor='#ED253C'
-      tintColor='#FFFFFF'
-      titleTextColor='#FFFFFF'        
-      translucent={false}
-    />
+        initialRoute={route}
+        style={styles.header}
+        barTintColor='#ED253C'
+        tintColor='#FFFFFF'
+        titleTextColor='#FFFFFF'        
+        translucent={false}
+      />
     );
   }
 

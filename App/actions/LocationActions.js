@@ -10,6 +10,31 @@ import GuestarAPI from '../utils/GuestarAPI';
 
 const LocationActions = {
 
+  removeLocationsBinding() {
+    GuestarAPI.removeLocationsBinding();
+  },
+
+  getLocations() {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_LOCATIONS
+    });
+    GuestarAPI.getLocations();
+  },
+
+  getLocationsSuccess(locations) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_LOCATIONS_SUCCESS,
+      locations: locations
+    });
+  },
+
+  getLocationsFail(error) {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.GET_LOCATIONS_FAIL,
+      artists: error
+    });
+  },
+
   createLocation(locationData) {
     AppDispatcher.dispatch({
       actionType: AppConstants.CREATE_LOCATION,
@@ -18,10 +43,9 @@ const LocationActions = {
     GuestarAPI.createLocation(locationData);
   },
 
-  createLocationSuccess(location) {
+  createLocationSuccess() {
     AppDispatcher.dispatch({
-      actionType: AppConstants.CREATE_LOCATION_SUCCESS,
-      location: location
+      actionType: AppConstants.CREATE_LOCATION_SUCCESS
     });
   },
 
