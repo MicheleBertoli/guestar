@@ -1,5 +1,5 @@
 /**
- * Settings Component
+ * Profile Component
  */
 
 'use strict';
@@ -26,7 +26,7 @@ const {
   NativeModules: { FBLoginManager }
 } = React;
 
-class Settings extends Component {
+class Profile extends Component {
     
   constructor(props) {
     super(props);
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Settings;
+export default Profile;

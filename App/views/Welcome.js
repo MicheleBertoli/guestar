@@ -44,7 +44,8 @@ class Welcome extends Component {
   }
 
   componentWillUnmount() {
-    WelcomeStore.removeChangeListener(this._onChange);
+    WelcomeActions.removeArtistsBinding();
+    WelcomeStore.removeChangeListener(this._onChange);    
   }
 
   render() {
@@ -52,7 +53,7 @@ class Welcome extends Component {
       <ListView
         dataSource={this.state.artists}
         renderRow={(rowData) => this._getArtistInfo(rowData)}
-        contentInset={{ bottom: 64 }}  
+        contentInset={{ bottom: 112 }}  
       />
     );
   }

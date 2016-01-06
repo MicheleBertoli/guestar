@@ -15,7 +15,7 @@ const _state = {
   isLocationCreated: false
 };
 
-const _setLocations = locations => _state.locations = locations;
+const _setLocations = locations => _state.locations = locations.reverse();
 const _setLocationCreated = isLocationCreated =>
   _state.isLocationCreated = isLocationCreated;
 

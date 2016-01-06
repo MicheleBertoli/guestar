@@ -10,6 +10,10 @@ import GuestarAPI from '../utils/GuestarAPI';
 
 const WelcomeActions = {
 
+  removeArtistsBinding() {
+    GuestarAPI.removeArtistsBinding();
+  },
+
 	getArtists() {
     AppDispatcher.dispatch({
       actionType: AppConstants.GET_ARTISTS

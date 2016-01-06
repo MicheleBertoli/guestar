@@ -14,7 +14,7 @@ const {
   StyleSheet
 } = React;
 
-class MapTextInput extends Component {
+class MapAddress extends Component {
 
   constructor(props) {
     super(props);    
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MapTextInput;
+export default MapAddress;

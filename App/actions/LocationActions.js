@@ -14,11 +14,12 @@ const LocationActions = {
     GuestarAPI.removeLocationsBinding();
   },
 
-  getLocations() {
+  getLocations(userID) {
     AppDispatcher.dispatch({
-      actionType: AppConstants.GET_LOCATIONS
+      actionType: AppConstants.GET_LOCATIONS,
+      userID: userID
     });
-    GuestarAPI.getLocations();
+    GuestarAPI.getLocations(userID);
   },
 
   getLocationsSuccess(locations) {

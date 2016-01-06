@@ -5,9 +5,10 @@
 'use strict';
 
 import React from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const { 
-  Component, 
+  Component,
   StyleSheet, 
   NavigatorIOS, 
   TabBarIOS, 
@@ -41,49 +42,59 @@ class Menu extends Component {
     return (
       <TabBarIOS 
         selectedTab={this.state.selectedTab} 
-        tintColor="#ED253C"
-        barTintColor="white" 
+        barTintColor='#FFFFFF'
+        tintColor='#ED253C'
+        translucent={false}
         style={styles.menu}>
-        <TabBarIOS.Item
+        <Icon.TabBarItem
           selected={this.state.selectedTab === 'first'}
-          systemIcon='most-recent'
+          title={null}
+          iconName={this.props.firstRoute.iconName}
+          selectedIconName={this.props.firstRoute.selectedIconName}
           onPress={() => {
             this.setState({
               selectedTab: 'first'
             });
           }}>
           {this.renderSection(this.props.firstRoute)}
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
           selected={this.state.selectedTab === 'second'}
-          systemIcon='featured'
+          title={null}
+          iconName={this.props.secondRoute.iconName}
+          selectedIconName={this.props.secondRoute.selectedIconName}
           onPress={() => {
             this.setState({
               selectedTab: 'second'
             });
           }}>
           {this.renderSection(this.props.secondRoute)}
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
           selected={this.state.selectedTab === 'third'}
-          systemIcon='most-viewed'
+          title={null}
+          iconName={this.props.thirdRoute.iconName}
+          selectedIconName={this.props.thirdRoute.selectedIconName}
+          iconSize={34}
           onPress={() => {
             this.setState({
               selectedTab: 'third'
             });
           }}>
           {this.renderSection(this.props.thirdRoute)}
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
           selected={this.state.selectedTab === 'fourth'}
-          systemIcon='more'
+          title={null}
+          iconName={this.props.fourthRoute.iconName}
+          selectedIconName={this.props.fourthRoute.selectedIconName}
           onPress={() => {
             this.setState({
               selectedTab: 'fourth'
             });
           }}>
           {this.renderSection(this.props.fourthRoute)}
-        </TabBarIOS.Item>
+        </Icon.TabBarItem>
       </TabBarIOS>
     );
   }
@@ -93,7 +104,6 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   menu: {
     position: 'relative',
-    backgroundColor: 'white',
     bottom: 0,
     right: 0,
     left: 0

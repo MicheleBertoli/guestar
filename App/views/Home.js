@@ -12,8 +12,9 @@ import LoginActions from '../actions/LoginActions';
 import Menu from '../components/Menu';
 import Login from './Login';
 import Welcome from './Welcome';
-import Event from './Event';
-import Settings from './Settings';
+import Events from './Events';
+import Profile from './Profile';
+import More from './More';
 
 const { 
   AsyncStorage,
@@ -21,6 +22,7 @@ const {
   Component, 
   Dimensions,
   StyleSheet, 
+  StatusBarIOS,
   Text,
   View 
 } = React;
@@ -50,7 +52,7 @@ class Home extends Component {
     AsyncStorage.getItem('accessToken').then((accessToken) => {
       this.setState({ isReady: true });
       if(accessToken && accessToken !== '') {
-        LoginActions.loginUser(accessToken);        
+        LoginActions.loginUser(accessToken);
       }
     }).done();
   }
@@ -66,13 +68,33 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.isReady ?      
+        {this.state.isReady ?
           (this.state.user) ?
             <Menu
-              firstRoute={{ title: 'Home', component: Welcome }}
-              secondRoute={{ title: 'News', component: Event }}
-              thirdRoute={{ title: 'Evento', component: Event }}
-              fourthRoute={{ title: 'Impostazioni', component: Settings }}
+              firstRoute={{ 
+                title: 'Home', 
+                component: Welcome,
+                iconName: 'ios-home-outline',
+                selectedIconName: 'ios-home'
+              }}
+              secondRoute={{ 
+                title: 'Eventi', 
+                component: Events,
+                iconName: 'ios-location-outline',
+                selectedIconName: 'ios-location'
+              }}
+              thirdRoute={{ 
+                title: 'Profilo',
+                component: Profile,
+                iconName: 'ios-person-outline',
+                selectedIconName: 'ios-person'
+              }}
+              fourthRoute={{ 
+                title: 'Altro', 
+                component: More,
+                iconName: 'ios-settings',
+                selectedIconName: 'ios-settings-strong'
+              }}
             />
           :    
             <Login />
@@ -86,11 +108,11 @@ class Home extends Component {
 
   _renderLoading() {
     return (
-      <View style={styles.loading}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicatorIOS 
-            style={styles.loadingSpinner}
-          />
+      <View style={styles.loadingContainer}>
+        <View style={styles.loading}>
+          <View style={styles.loadingSpinner}>
+            <ActivityIndicatorIOS />
+          </View>
         </View>
       </View>
     );
@@ -117,9 +139,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: 64,
+    left: 0,
+    right: 0,
+    width: width,
+    height: height - 112,
+    backgroundColor: 'transparent'
+  },
   loading: {
     position: 'absolute',
-    top: height / 2,
+    top: (height - 112) / 2,
     left: width / 2,
     marginTop: -40,
     marginLeft: -40,
@@ -130,14 +161,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#222'
   },
-  loadingContainer: {
+  loadingSpinner: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent'
   },
-  loadingSpinner: {
+  loadingBanner: {
+    position: 'absolute',
+    backgroundColor: '#BF1C2C',
+    top: 64,
+    width: width,
+    height: 24    
+  },
+  loadingText: {
+    textAlign: 'center',
+    fontSize: 13,
+    marginTop: 4,
+    color: '#FFFFFF'
   }
 });
 

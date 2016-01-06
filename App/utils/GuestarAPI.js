@@ -27,9 +27,22 @@ const GuestarAPI = {
   },
 
   logoutUser() {
-    base.removeBinding(artists);
-    base.removeBinding(locations);
-    LoginActions.logoutUserSuccess();
+    new Promise((resolve, reject) => {
+      base.unauth();
+      const loginState = base.getAuth();
+      if(!loginState) {
+        resolve('Utente sloggato.');
+      }
+      else {
+        reject('Errore nel logout!');
+      }
+    }).then((result) => {
+      console.log(result);
+      LoginActions.logoutUserSuccess();
+    }, (err) => {
+      console.log(err);
+      LoginActions.logoutUserFail();
+    });
   },
 
   getArtists() {
@@ -58,8 +71,12 @@ const GuestarAPI = {
 	  });
   },
 
-  getLocations() {
-    locations = base.listenTo('locations', {
+  removeArtistsBinding() {
+    base.removeBinding(artists);
+  },
+
+  getLocations(uid) {
+    locations = base.listenTo('locations/' + uid, {
       context: this,
       asArray: true,
       then(locations) {
@@ -72,7 +89,7 @@ const GuestarAPI = {
   },
 
   createLocation(locationData) {
-    base.push('locations', {
+    base.push('locations/' + locationData.uid, {
       data: locationData,
       then(){
         LocationActions.createLocationSuccess();

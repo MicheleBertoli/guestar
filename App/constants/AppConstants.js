@@ -10,6 +10,7 @@ const AppConstants = keyMirror({
   LOGIN_USER_FAIL: null,
   LOGOUT_USER: null,
   LOGOUT_USER_SUCCESS: null,
+  LOGOUT_USER_FAIL: null,
 	GET_ARTISTS: null,
 	GET_ARTISTS_SUCCESS: null,
 	GET_ARTISTS_FAIL: null,

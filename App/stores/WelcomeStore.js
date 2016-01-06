@@ -14,7 +14,7 @@ const _state = {
   artists: []
 };
 
-const _setArtists = artists => _state.artists = artists;
+const _setArtists = artists => _state.artists = artists.reverse();
 
 const WelcomeStore = _.assign({}, BaseStore, {
 

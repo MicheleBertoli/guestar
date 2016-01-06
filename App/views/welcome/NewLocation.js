@@ -12,18 +12,16 @@ import LocationStore from '../../stores/LocationStore';
 
 import Select from '../../components/Select';
 import SelectImage from '../../components/SelectImage';
-import MapBox from '../../components/MapBox';
-import MapTextInput from '../../components/MapTextInput';
+import MapAddress from '../../components/MapAddress';
 
 const { 
   Component, 
   StyleSheet,
   Text,
   TextInput,
+  MapView,
   AlertIOS,
-  PickerIOS,
   TouchableOpacity,
-  Modal,
   View,
   ScrollView 
 } = React;
@@ -92,16 +90,18 @@ class NewLocation extends Component {
       <ScrollView 
         ref='scrollView'
         style={styles.container}
-        contentInset={{ bottom: 64 }}
+        contentInset={{ bottom: 112 }}
         keyboardDismissMode={'on-drag'}>
 
-        <MapTextInput
+        <MapAddress
           placeholder='Indirizzo (es. Via Tommaseo 49, Brescia)'
           setAddress={(data, details) => this._setAddress(data, details)}      
         />
 
-        <MapBox
+        <MapView
+          style={styles.map}
           region={this.state.region}
+          showsUserLocation={true}
           annotations={this.state.annotations}
         />
 
@@ -173,9 +173,8 @@ class NewLocation extends Component {
           </View>
           <TouchableOpacity 
             style={styles.button} 
-            onPress={() => this._createLocation()} 
-            underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Salva</Text>
+            onPress={() => this._createLocation()}>
+            <Text style={styles.buttonText}>Crea la tua location</Text>
           </TouchableOpacity>       
         </View>
       </ScrollView>      
@@ -284,19 +283,20 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     lineHeight: 24
   },
-  buttonText: {
-    fontSize: 15,
-    color: 'white',
-    alignSelf: 'center'
+  map: {
+    flex: 1,
+    height: 200
   },
   button: {
-    height: 36,
+    alignItems: 'center',
     backgroundColor: '#ED253C',
-    borderColor: '#DB2033',
-    borderWidth: 1,
-    borderRadius: 8,
+    padding: 10,
     margin: 20,
-    justifyContent: 'center'
+    borderRadius: 5   
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: 'white'
   },
   sectionFirst: {
     borderTopWidth: 1,

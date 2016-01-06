@@ -53,10 +53,8 @@
 			</dict>
 			<key>guestar.com</key>
 			<dict>
-				<key>NSIncludesSubdomains</key>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
 			</dict>
 			<key>127.0.0.1</key>
 			<dict>
@@ -64,11 +62,6 @@
 				<true/>
 			</dict>
 			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>			
-			<key>guestar.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
@@ -82,6 +75,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>
+		<string>Ionicons.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -112,7 +106,7 @@
 	<string>Guestar</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-	    <string>fbauth2</string>
+		<string>fbauth2</string>
 	</array>
 </dict>
 </plist>

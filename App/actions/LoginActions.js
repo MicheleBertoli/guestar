@@ -43,6 +43,12 @@ const LoginActions = {
     AppDispatcher.dispatch({
       actionType: AppConstants.LOGOUT_USER_SUCCESS
     });
+  },
+
+  logoutUserFail() {
+    AppDispatcher.dispatch({
+      actionType: AppConstants.LOGOUT_USER_FAIL
+    });
   }
 
 };

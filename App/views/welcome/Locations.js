@@ -5,6 +5,7 @@
 'use strict';
 
 import React from 'react-native';
+import NewEvent from './NewEvent';
 
 import LocationStore from '../../stores/LocationStore';
 import LocationActions from '../../actions/LocationActions';
@@ -33,7 +34,7 @@ class Locations extends Component {
 
   componentDidMount() {
     LocationStore.addChangeListener(this._onChange);
-    LocationActions.getLocations();
+    LocationActions.getLocations(this.props.user.uid);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -50,7 +51,7 @@ class Locations extends Component {
       <ListView
         dataSource={this.state.locations}
         renderRow={(rowData) => this._getLocationsInfo(rowData)}
-        contentInset={{ bottom: 64 }}  
+        contentInset={{ bottom: 112 }}  
       />
     );
   }
@@ -59,7 +60,7 @@ class Locations extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => console.log('Location pressed!')}>
+          onPress={() => this._goToNewEvent(location)}>
           <Image 
             style={styles.image}
             source={{ uri: location.image }}
@@ -77,6 +78,18 @@ class Locations extends Component {
         </TouchableOpacity>
       </View>     
     );
+  }
+
+  _goToNewEvent(location) {
+    this.props.navigator.push({
+      title: 'Nuovo evento',
+      component: NewEvent,
+      passProps: { 
+        user: this.props.user,
+        artist: this.props.artist,
+        location: location
+      }
+    });
   }
   
   _onChange() {
