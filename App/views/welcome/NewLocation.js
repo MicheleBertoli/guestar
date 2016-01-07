@@ -12,7 +12,7 @@ import LocationStore from '../../stores/LocationStore';
 
 import Select from '../../components/Select';
 import SelectImage from '../../components/SelectImage';
-import MapAddress from '../../components/MapAddress';
+import SelectAddress from '../../components/SelectAddress';
 
 const { 
   Component, 
@@ -23,7 +23,7 @@ const {
   AlertIOS,
   TouchableOpacity,
   View,
-  ScrollView 
+  ScrollView
 } = React;
 
 const tipologia = {
@@ -59,7 +59,9 @@ class NewLocation extends Component {
       user: this.props.user,
       region: {
         latitude: 40.941728,
-        longitude: 3.5839248
+        longitude: 3.5839248,
+        latitudeDelta: 0.0,
+        longitudeDelta: 0.0
       },
       locationCreated: LocationStore.isLocationCreated()
     };
@@ -92,19 +94,18 @@ class NewLocation extends Component {
         style={styles.container}
         contentInset={{ bottom: 112 }}
         keyboardDismissMode={'on-drag'}>
-
-        <MapAddress
+        <SelectAddress
           placeholder='Indirizzo (es. Via Tommaseo 49, Brescia)'
-          setAddress={(data, details) => this._setAddress(data, details)}      
+          setAddress={(data, details) => {
+            this._setAddress(data, details);
+          }}      
         />
-
         <MapView
           style={styles.map}
           region={this.state.region}
           showsUserLocation={true}
           annotations={this.state.annotations}
         />
-
         <View style={styles.details}>   
           <View style={styles.sectionFirst}>
             <TextInput 
@@ -177,7 +178,7 @@ class NewLocation extends Component {
             <Text style={styles.buttonText}>Crea la tua location</Text>
           </TouchableOpacity>       
         </View>
-      </ScrollView>      
+      </ScrollView>
     );
   }
 
@@ -185,7 +186,9 @@ class NewLocation extends Component {
     this.setState({
       region: {
         latitude: details.geometry.location.lat,
-        longitude: details.geometry.location.lng
+        longitude: details.geometry.location.lng,
+        latitudeDelta: 0.0,
+        longitudeDelta: 0.0
       },
       annotations: [{
         latitude: details.geometry.location.lat,
@@ -199,30 +202,40 @@ class NewLocation extends Component {
 
   _createLocation() {
 
+    const user = this.props.user.facebook.displayName;
+    const name = user.substr(0, user.indexOf(' '));
+
     if(this.state.nome && this.state.descrizione && this.state.tipologia && 
       this.state.spazio && this.state.persone && this.state.immagine 
       && this.state.isRegionSelected) {
       
-      const type = Helpers.getKeyByValue(tipologia, this.state.tipologia);
-      const space = Helpers.getKeyByValue(spazio, this.state.spazio);
-      const people = Helpers.getKeyByValue(persone, this.state.persone);
+      AlertIOS.alert(
+        'Guestar', 
+        'Hey ' + name + '! 😊\nSei pronto a creare la tua location?', 
+        [{text: 'Crea', onPress: (text) => {
 
-      const locationData = {
-        uid: this.state.user.uid,
-        name: this.state.nome,
-        description: this.state.descrizione,
-        address: this.state.indirizzo,
-        type: type,
-        space: space,
-        people: people,
-        image: this.state.immagine.uri,
-        location: {
-          lat: this.state.region.latitude,
-          lng: this.state.region.longitude
-        }
-      };
+            const type = Helpers.getKeyByValue(tipologia, this.state.tipologia);
+            const space = Helpers.getKeyByValue(spazio, this.state.spazio);
+            const people = Helpers.getKeyByValue(persone, this.state.persone);
 
-      LocationActions.createLocation(locationData);
+            const locationData = {
+              uid: this.state.user.uid,
+              name: this.state.nome,
+              description: this.state.descrizione,
+              address: this.state.indirizzo,
+              type: type,
+              space: space,
+              people: people,
+              image: this.state.immagine.uri,
+              location: {
+                lat: this.state.region.latitude,
+                lng: this.state.region.longitude
+              }
+            };
+          }, type: 'plain-text'},
+        {text: 'Annulla', style: 'cancel'}],
+        'default'
+      );
     }
     else {
       let message = '';
@@ -244,7 +257,7 @@ class NewLocation extends Component {
 
       AlertIOS.alert(
         'Guestar', 
-        'Hey amico/a 😊\nHai dimenticato questi dati:\n\n' + message, 
+        'Hey ' + name + '! 😊\nHai dimenticato questi dati:\n\n' + message, 
         [{text: 'OK'}], 
         'default'
       );
@@ -285,7 +298,7 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-    height: 200
+    height: 150
   },
   button: {
     alignItems: 'center',

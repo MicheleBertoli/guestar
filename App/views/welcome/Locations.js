@@ -107,13 +107,6 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     lineHeight: 24
   },
-  details: {
-    flex: 1,
-    alignItems: 'center',
-    textAlign: 'center',
-    margin: 20,
-    marginBottom: 0
-  },
   image: {
     height: 150
   },

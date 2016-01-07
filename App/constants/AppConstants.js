@@ -23,6 +23,12 @@ const AppConstants = keyMirror({
   CREATE_LOCATION: null,
   CREATE_LOCATION_SUCCESS: null,
   CREATE_LOCATION_FAIL: null,
+  GET_EVENTS: null,
+  GET_EVENTS_SUCCESS: null,
+  GET_EVENTS_FAIL: null,
+  CREATE_EVENT: null,
+  CREATE_EVENT_SUCCESS: null,
+  CREATE_EVENT_FAIL: null
 });
 
 export default AppConstants;

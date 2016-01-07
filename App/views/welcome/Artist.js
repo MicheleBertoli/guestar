@@ -19,6 +19,7 @@ const {
   Image, 
   View,
   TouchableOpacity,
+  AlertIOS,
   ScrollView 
 } = React;
 
@@ -130,6 +131,10 @@ class Artist extends Component {
   }
 
   _goToNewLocation() {
+
+    const user = this.state.user.facebook.displayName;
+    const name = user.substr(0, user.indexOf(' '));
+
     this.props.navigator.push({
       title: 'Nuova location',
       component: NewLocation,

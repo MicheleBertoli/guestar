@@ -5,9 +5,9 @@
 'use strict';
 
 import React from 'react-native';
+
 import WelcomeStore from '../stores/WelcomeStore';
 import WelcomeActions from '../actions/WelcomeActions';
-
 import Artist from './welcome/Artist';
 
 const { 
@@ -66,10 +66,12 @@ class Welcome extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => this._goToArtist(artist)}>
+          
           <Image 
             style={styles.image}
             source={{ uri: baseURL + artist.imageHorizontal }}
           />
+        
           <View style={styles.textContainer}>
             <Text
               style={[styles.text, styles.name]}>
@@ -110,6 +112,16 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 150
+  },
+  infoContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: 300,
+    height: 150,
+    opacity: 0.5,
+    backgroundColor: '#222',
   },
   textContainer: {
     position: 'absolute',

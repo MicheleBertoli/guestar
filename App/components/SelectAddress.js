@@ -14,7 +14,7 @@ const {
   StyleSheet
 } = React;
 
-class MapAddress extends Component {
+class SelectAddress extends Component {
 
   constructor(props) {
     super(props);    
@@ -23,9 +23,12 @@ class MapAddress extends Component {
   render() {
     return (
       <GooglePlacesAutocomplete
-        name={this.props.name}
         placeholder={this.props.placeholder}
+        minLength={2}
         autoFocus={false}
+        currentLocation={true}
+        currentLocationLabel='Utilizza posizione corrente'
+        nearbyPlacesAPI='GoogleReverseGeocoding'
         fetchDetails={true}
         onPress={(data, details = null) => {
           this.props.setAddress && this.props.setAddress(data, details);
@@ -76,11 +79,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderTopColor: '#CCCCCC',
     borderTopWidth: 1,
-    height: 45
+    height: 135
   },
   row: {
-    paddingLeft: 20
+    paddingLeft: 20,
+    height: 44
   }
 });
 
-export default MapAddress;
+export default SelectAddress;

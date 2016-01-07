@@ -107,10 +107,6 @@ class SelectDate extends Component {
   }
 }
 
-SelectDate.propTypes = { 
-  date: React.PropTypes.Object,
-  initialCount: React.PropTypes.number
-};
 SelectDate.defaultProps = { 
   date: new Date(),
   timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60

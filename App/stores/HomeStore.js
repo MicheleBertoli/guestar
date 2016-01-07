@@ -76,6 +76,22 @@ AppDispatcher.register(action => {
       _setLoading(false);
       HomeStore.emitChange();
       break;
+    case AppConstants.GET_EVENTS:
+      _setLoading(true);
+      HomeStore.emitChange();
+      break;
+    case AppConstants.GET_EVENTS_SUCCESS:
+      _setLoading(false);
+      HomeStore.emitChange();
+      break;
+    case AppConstants.CREATE_EVENT:
+      _setLoading(true);
+      HomeStore.emitChange();
+      break;
+    case AppConstants.CREATE_EVENT_SUCCESS:
+      _setLoading(false);
+      HomeStore.emitChange();
+      break;
   }
   
 });

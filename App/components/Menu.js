@@ -12,7 +12,8 @@ const {
   StyleSheet, 
   NavigatorIOS, 
   TabBarIOS, 
-  StatusBarIOS, 
+  StatusBarIOS,
+  AlertIOS,
   View 
 } = React;
 
@@ -25,12 +26,14 @@ class Menu extends Component {
     };
   }
 
-  renderSection(route) {
+  renderSection(route, ref) {
     return (
       <NavigatorIOS
+        ref={ref}
         initialRoute={route}
         style={styles.header}
         barTintColor='#ED253C'
+        shadowHidden={true}
         tintColor='#FFFFFF'
         titleTextColor='#FFFFFF'        
         translucent={false}
@@ -48,52 +51,64 @@ class Menu extends Component {
         style={styles.menu}>
         <Icon.TabBarItem
           selected={this.state.selectedTab === 'first'}
-          title={null}
+          title={this.props.firstRoute.title}
           iconName={this.props.firstRoute.iconName}
           selectedIconName={this.props.firstRoute.selectedIconName}
           onPress={() => {
-            this.setState({
-              selectedTab: 'first'
-            });
+            (this.state.selectedTab === 'first') ?
+              this.refs.first.popToTop()
+            :
+              this.setState({
+                selectedTab: 'first'
+              });
           }}>
-          {this.renderSection(this.props.firstRoute)}
+          {this.renderSection(this.props.firstRoute, 'first')}
         </Icon.TabBarItem>
         <Icon.TabBarItem
           selected={this.state.selectedTab === 'second'}
-          title={null}
+          title={this.props.secondRoute.title}
           iconName={this.props.secondRoute.iconName}
           selectedIconName={this.props.secondRoute.selectedIconName}
           onPress={() => {
-            this.setState({
-              selectedTab: 'second'
-            });
+            (this.state.selectedTab === 'second') ?
+              this.refs.second.popToTop()
+            :
+              this.setState({
+                selectedTab: 'second'
+              });
           }}>
-          {this.renderSection(this.props.secondRoute)}
+          {this.renderSection(this.props.secondRoute, 'second')}
         </Icon.TabBarItem>
         <Icon.TabBarItem
           selected={this.state.selectedTab === 'third'}
-          title={null}
+          title={this.props.thirdRoute.title}
           iconName={this.props.thirdRoute.iconName}
           selectedIconName={this.props.thirdRoute.selectedIconName}
           iconSize={34}
           onPress={() => {
-            this.setState({
-              selectedTab: 'third'
-            });
+            (this.state.selectedTab === 'third') ?
+              this.refs.third.popToTop()
+            :
+              this.setState({
+                selectedTab: 'third'
+              });
           }}>
-          {this.renderSection(this.props.thirdRoute)}
+          {this.renderSection(this.props.thirdRoute, 'third')}
         </Icon.TabBarItem>
         <Icon.TabBarItem
           selected={this.state.selectedTab === 'fourth'}
-          title={null}
+          title={this.props.fourthRoute.title}
           iconName={this.props.fourthRoute.iconName}
           selectedIconName={this.props.fourthRoute.selectedIconName}
           onPress={() => {
-            this.setState({
-              selectedTab: 'fourth'
-            });
+            (this.state.selectedTab === 'fourth') ?
+              this.refs.fourth.popToTop()
+            :
+              this.setState({
+                selectedTab: 'fourth'
+              });
           }}>
-          {this.renderSection(this.props.fourthRoute)}
+          {this.renderSection(this.props.fourthRoute, 'fourth')}
         </Icon.TabBarItem>
       </TabBarIOS>
     );

@@ -9,9 +9,10 @@ import WelcomeActions from '../actions/WelcomeActions';
 import LoginActions from '../actions/LoginActions';
 import ArtistActions from '../actions/ArtistActions';
 import LocationActions from '../actions/LocationActions';
+import EventActions from '../actions/EventActions';
 
 const base = Rebase.createClass('https://guestar.firebaseio.com');
-let artists, locations;
+let artists, locations, events;
 
 const GuestarAPI = {
 
@@ -99,6 +100,32 @@ const GuestarAPI = {
 
   removeLocationsBinding() {
     base.removeBinding(locations);
+  },
+
+  getEvents(uid) {
+    events = base.listenTo('events/' + uid, {
+      context: this,
+      asArray: true,
+      then(events) {
+        EventActions.getEventsSuccess(events);
+      },
+      error(error) {
+        EventActions.getEventsError(error);
+      }
+    });
+  },
+
+  createEvent(eventData) {
+    base.push('events/' + eventData.uid, {
+      data: eventData,
+      then(){
+        EventActions.createEventSuccess();
+      }
+    });
+  },
+
+  removeEventsBinding() {
+    base.removeBinding(events);
   }
 	
 };

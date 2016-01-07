@@ -7,9 +7,10 @@
 import React from 'react-native';
 import Helpers from '../../utils/Helpers';
 
-// import EventActions from '../../actions/EventActions';
-// import EventStore from '../../stores/EventStore';
+import EventActions from '../../actions/EventActions';
+import EventStore from '../../stores/EventStore';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
 import SelectDate from '../../components/SelectDate';
 
 const { 
@@ -32,20 +33,20 @@ class NewEvent extends Component {
 
     this.state = {
       immagine: null,
-      //eventCreated: EventStore.isEventCreated()
+      eventCreated: EventStore.isEventCreated()
     };
 
     this._onChange = this._onChange.bind(this);
   }
 
   componentDidMount() {
-    //EventStore.addChangeListener(this._onChange);
+    EventStore.addChangeListener(this._onChange);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if(prevState.isLocationCreated !== this.state.isLocationCreated) {
-    //   this._confirmAndGetBack();
-    // }
+    if(prevState.isEventCreated !== this.state.isEventCreated) {
+      this._confirmAndGetBack();
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -53,7 +54,7 @@ class NewEvent extends Component {
   }
 
   componentWillUnmount() {
-    //EventStore.removeChangeListener(this._onChange);
+    EventStore.removeChangeListener(this._onChange);
   }
 
   render() {
@@ -64,30 +65,31 @@ class NewEvent extends Component {
         contentInset={{ bottom: 112 }}
         keyboardDismissMode={'on-drag'}>
 
-        {this.state.immagine ?
-          <Image 
-            style={styles.image} 
-            source={this.state.immagine} 
-            resizeMode={'cover'} 
-          />
-        :
-          <View style={styles.imagePlaceholder}>
-            <Text>Seleziona un'immagine</Text>
-          </View>
-        }
-
         <TouchableOpacity 
-          style={[styles.button, styles.buttonImage]} 
+          style={this.state.immagine ? 
+            styles.imagePlaceholder : styles.textPlaceholder}
           onPress={() => this._selectImage()}>
-          <Text style={[styles.buttonText, styles.buttonImageText]}>
-            Seleziona un'immagine
-          </Text>
-        </TouchableOpacity>  
-
+          {this.state.immagine ?
+            <Image 
+              style={styles.image} 
+              source={this.state.immagine} 
+              resizeMode={'cover'} 
+            />
+            : 
+            <View style={styles.imageButton}>
+              <Icon name='picture-o' size={46} color="#BBB" 
+                style={styles.imageButtonIcon} />
+              <Text style={styles.imageButtonText}>
+                Seleziona un'immagine
+              </Text>
+            </View>
+          }
+        </TouchableOpacity>
+        
         <View style={styles.details}>   
           <View style={styles.sectionFirst}>
             <TextInput 
-              placeholder='Nome'
+              placeholder='Nome evento'
               onChangeText={(nome) => {
                 this.setState({nome: nome});
               }}
@@ -96,7 +98,7 @@ class NewEvent extends Component {
           </View>
           <View style={styles.section}>
             <TextInput 
-              placeholder='Descrizione'
+              placeholder='Descrizione evento'
               multiline={true}
               onFocus={() => {
                 this.refs.scrollView.getScrollResponder().scrollTo(100);
@@ -145,27 +147,40 @@ class NewEvent extends Component {
 
   _createEvent() {
 
+    const user = this.props.user.facebook.displayName;
+    const name = user.substr(0, user.indexOf(' '));
+
     if(this.state.nome && this.state.descrizione && 
       this.state.data && this.state.immagine) {
       
-      const eventData = {
-        uid: this.props.user.uid,
-        name: this.state.nome,
-        description: this.state.descrizione,
-        date: this.state.date,
-        image: this.state.immagine,
-        location: {
-          name: this.props.location.name,
-          lat: this.props.location.location.lat,
-          lng: this.props.location.location.lng
-        },
-        artist: {
-          id: this.props.artist.id,
-          name: this.props.artist.name
-        }
-      };
+        AlertIOS.alert(
+        'Guestar', 
+        'Hey ' + name + '! 😊\nSei pronto a creare il tuo evento?', 
+        [{text: 'Crea', onPress: (text) => {
 
-      //EventActions.createEvent(eventData);
+            const eventData = {
+              uid: this.props.user.uid,
+              name: this.state.nome,
+              description: this.state.descrizione,
+              date: this.state.data,
+              image: this.state.immagine,
+              location: {
+                name: this.props.location.name,
+                lat: this.props.location.location.lat,
+                lng: this.props.location.location.lng
+              },
+              artist: {
+                id: this.props.artist.id,
+                name: this.props.artist.name
+              }
+            };
+
+            EventActions.createEvent(eventData);
+
+          }, type: 'plain-text'},
+        {text: 'Annulla', style: 'cancel'}],
+        'default'
+      );        
     }
     else {
       let message = '';
@@ -181,7 +196,7 @@ class NewEvent extends Component {
       
       AlertIOS.alert(
         'Guestar', 
-        'Hey amico/a 😊\nHai dimenticato questi dati:\n\n' + message, 
+        'Hey ' + name + '! 😊\nHai dimenticato questi dati:\n\n' + message, 
         [{text: 'OK'}], 
         'default'
       );
@@ -194,8 +209,8 @@ class NewEvent extends Component {
       cancelButtonTitle: 'Annulla',
       takePhotoButtonTitle: 'Scatta una foto...',
       chooseFromLibraryButtonTitle: 'Scegli dalla libreria...',
-      maxWidth: 800,
-      maxHeight: 800,
+      maxWidth: 400,
+      maxHeight: 400,
       quality: 1,
       allowsEditing: false,
       noData: false,
@@ -228,11 +243,11 @@ class NewEvent extends Component {
   _confirmAndGetBack() {
     AlertIOS.alert(
       'Guestar', 
-      'Evento creato! 😊', 
+      'Evento creato! 😊\nLo troverai nella scheda \'Eventi\'', 
       [{
         text: 'OK', 
         onPress: (text) => {
-          // Push 'Evento creato'
+          this.props.navigator.popToTop();
         }
       }], 
       'default'
@@ -240,9 +255,9 @@ class NewEvent extends Component {
   }
 
   _onChange() {
-    // this.setState({
-    //   isEventCreated: EventStore.isEventCreated()
-    // });
+    this.setState({
+      isEventCreated: EventStore.isEventCreated()
+    });
   }
 }
 
@@ -251,14 +266,25 @@ const styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    height: 200,
-    backgroundColor: '#FFF'
+    height: 200
   },
   imagePlaceholder: {
+    height: 200
+  },
+  textPlaceholder: {
     height: 200,
     backgroundColor: '#EEE',
-    alignItems: 'center',
     justifyContent: 'center'
+  },
+  imageButton: {
+    alignItems: 'center'
+  },
+  imageButtonIcon: {
+    marginBottom: 10
+  },
+  imageButtonText: {
+    color: '#AAA',
+    fontSize: 16
   },
   details: {
     marginBottom: 0

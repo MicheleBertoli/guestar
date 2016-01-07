@@ -72,7 +72,7 @@ class Home extends Component {
           (this.state.user) ?
             <Menu
               firstRoute={{ 
-                title: 'Home', 
+                title: 'Home',
                 component: Welcome,
                 iconName: 'ios-home-outline',
                 selectedIconName: 'ios-home'
@@ -80,8 +80,11 @@ class Home extends Component {
               secondRoute={{ 
                 title: 'Eventi', 
                 component: Events,
-                iconName: 'ios-location-outline',
-                selectedIconName: 'ios-location'
+                iconName: 'ios-list-outline',
+                selectedIconName: 'ios-list',
+                passProps: {
+                  user: this.state.user
+                }
               }}
               thirdRoute={{ 
                 title: 'Profilo',
@@ -109,11 +112,9 @@ class Home extends Component {
   _renderLoading() {
     return (
       <View style={styles.loadingContainer}>
-        <View style={styles.loading}>
           <View style={styles.loadingSpinner}>
-            <ActivityIndicatorIOS />
+            <ActivityIndicatorIOS size='large' />
           </View>
-        </View>
       </View>
     );
   }
@@ -141,24 +142,12 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     position: 'absolute',
-    top: 64,
+    top: 0,
     left: 0,
     right: 0,
     width: width,
-    height: height - 112,
-    backgroundColor: 'transparent'
-  },
-  loading: {
-    position: 'absolute',
-    top: (height - 112) / 2,
-    left: width / 2,
-    marginTop: -40,
-    marginLeft: -40,
-    width: 80,
-    height: 80,
-    opacity: 0.9,
-    borderWidth: 1,
-    borderRadius: 10,
+    height: height,
+    opacity: 0.5,
     backgroundColor: '#222'
   },
   loadingSpinner: {
