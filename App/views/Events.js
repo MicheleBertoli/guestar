@@ -33,7 +33,8 @@ class Events extends Component {
       section: 'all',
       selectedIndex: 0,
       events: dataSource.cloneWithRows(EventStore.getEvents()),
-      user: this.props.user
+      user: this.props.user,
+      from: this.props.from
     };
 
     this._onChange = this._onChange.bind(this);
@@ -41,7 +42,13 @@ class Events extends Component {
 
   componentDidMount() {
     EventStore.addChangeListener(this._onChange);
-    EventActions.getEvents(this.state.user.uid);
+
+    if(this.state.from === 'home') {
+      EventActions.getEvents();
+    }
+    else if(this.state.from === 'dashboard') {
+      EventActions.getEvents(this.state.user.uid);
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -49,59 +56,60 @@ class Events extends Component {
   }
 
   componentWillUnmount() {
-    EventActions.removeEventsBinding();
     EventStore.removeChangeListener(this._onChange);    
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.selectEvents}>
-
-          <View>
-
+        {(this.state.from === 'home') ?
+          <View style={styles.selectEvents}>
+            <SegmentedControlIOS 
+              values={['Tutti', 'Personali']} 
+              selectedIndex={this.state.selectedIndex}
+              tintColor='#ED253C'
+              onChange={(event) => this._selectSection(event)}
+            />
           </View>
-
-          <SegmentedControlIOS 
-            values={['Tutti', 'Personali']} 
-            selectedIndex={this.state.selectedIndex}
-            style={styles.selector}
-            tintColor='#ED253C'
-            onChange={(event) => this._selectSection(event)}
-            translucent={false}
-          />
-        </View>
+        :
+          <View />
+        }
         <ListView
           dataSource={this.state.events}
           renderRow={(rowData) => this._getEventInfo(rowData)}
-          contentInset={{ bottom: 112 }}  
+          contentInset={{ bottom: 112 }}
         />
       </View>
     );
   }
 
   _getEventInfo(event) {  
+
+    const date = new Date(event.date);
+    const dateString = date.toLocaleDateString();
+
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this._goToEvent(event)}>
-          
+          onPress={() => this._goToEvent(event)}>          
           <Image 
             style={styles.image}
             source={{ uri: event.image.uri }}
-          />
-        
+          />        
           <View style={styles.textContainer}>
             <Text
               style={[styles.text, styles.name]}>
               {event.name}
             </Text>
             <Text
-              style={[styles.text, styles.artistName]}>
+              style={[styles.text, styles.artist]}>
               {event.artist.name}
             </Text>
+            <Text
+              style={[styles.text, styles.locationAndDate]}>
+              {event.location.name} - {dateString}
+            </Text>
           </View>
-
         </TouchableOpacity>
       </View>        
     );
@@ -109,7 +117,7 @@ class Events extends Component {
 
   _goToEvent(event) {
     this.props.navigator.push({
-      title: 'Evento',
+      title: event.name,
       component: Event,
       backButtonTitle: 'Indietro',      
       passProps: { event: event }
@@ -118,16 +126,20 @@ class Events extends Component {
   
   _selectSection(event) {
     if(event.nativeEvent.selectedSegmentIndex === 0) {
+      if(this.state.selectedIndex !== 0) {
+        EventActions.getEvents();
+      }
       this.setState({
-        section: 'all',
         selectedIndex: 0
-      });
+      });      
     }
     else if(event.nativeEvent.selectedSegmentIndex === 1) {
+      if(this.state.selectedIndex !== 1) {
+        EventActions.getEvents(this.state.user.uid);
+      }
       this.setState({
-        section: 'personal',
         selectedIndex: 1
-      });
+      });      
     }
   } 
 
@@ -145,8 +157,9 @@ const styles = StyleSheet.create({
     flex: 1,    
   },
   selectEvents: {
-    padding: 20,
-    backgroundColor: '#FFF'
+    padding: 10,
+    paddingTop: 0,
+    paddingBottom: 15
   },
   map: {
     flex: 1,
@@ -181,9 +194,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height : 1}
   },
   name: {
-    fontSize: 30
+    fontSize: 24
   },
-  artistName: {
+  artist: {
+    fontSize: 20
+  },
+  locationAndDate: {
     fontSize: 16
   }
 });

@@ -1,5 +1,5 @@
 /**
- * Event Component
+ * More Component
  */
 
 'use strict';
@@ -13,7 +13,7 @@ const {
   Text
 } = React;
 
-class Event extends Component {
+class More extends Component {
     
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class Event extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Evento</Text>         
+        <Text>About</Text>         
       </View>
     );
   }
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Event;
+export default More;

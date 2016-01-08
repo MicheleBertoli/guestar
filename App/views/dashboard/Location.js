@@ -1,5 +1,5 @@
 /**
- * More Component
+ * Location Component
  */
 
 'use strict';
@@ -13,7 +13,7 @@ const {
   Text
 } = React;
 
-class More extends Component {
+class Location extends Component {
     
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class More extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Altro</Text>         
+        <Text>Location</Text>         
       </View>
     );
   }
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default More;
+export default Location;

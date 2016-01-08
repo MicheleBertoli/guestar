@@ -29,7 +29,8 @@ class Welcome extends Component {
     const dataSource = new ListView.DataSource(
       {rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      artists: dataSource.cloneWithRows(WelcomeStore.getArtists())
+      artists: dataSource.cloneWithRows(WelcomeStore.getArtists()),
+      user: this.props.user
     };
     this._onChange = this._onChange.bind(this);
   }
@@ -44,13 +45,13 @@ class Welcome extends Component {
   }
 
   componentWillUnmount() {
-    WelcomeActions.removeArtistsBinding();
     WelcomeStore.removeChangeListener(this._onChange);    
   }
 
   render() {
     return (
       <ListView
+        style={styles.container}
         dataSource={this.state.artists}
         renderRow={(rowData) => this._getArtistInfo(rowData)}
         contentInset={{ bottom: 112 }}  
@@ -92,7 +93,10 @@ class Welcome extends Component {
       title: artist.name,
       component: Artist,
       backButtonTitle: 'Indietro',      
-      passProps: { artist: artist }
+      passProps: { 
+        artist: artist,
+        user: this.state.user
+      }
     });
   }  
   

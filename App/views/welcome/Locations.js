@@ -5,7 +5,9 @@
 'use strict';
 
 import React from 'react-native';
+
 import NewEvent from './NewEvent';
+import Location from '../dashboard/Location';
 
 import LocationStore from '../../stores/LocationStore';
 import LocationActions from '../../actions/LocationActions';
@@ -27,7 +29,8 @@ class Locations extends Component {
     const dataSource = new ListView.DataSource(
       {rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      locations: dataSource.cloneWithRows(LocationStore.getLocations())
+      locations: dataSource.cloneWithRows(LocationStore.getLocations()),
+      from: this.props.from
     };
     this._onChange = this._onChange.bind(this);
   }
@@ -42,13 +45,13 @@ class Locations extends Component {
   }
 
   componentWillUnmount() {
-    LocationActions.removeLocationsBinding();
     LocationStore.removeChangeListener(this._onChange);
   }
 
   render() {
     return (
       <ListView
+        style={styles.container}
         dataSource={this.state.locations}
         renderRow={(rowData) => this._getLocationsInfo(rowData)}
         contentInset={{ bottom: 112 }}  
@@ -60,7 +63,14 @@ class Locations extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this._goToNewEvent(location)}>
+          onPress={() => {
+            if(this.state.from === 'artist') {
+              this._goToNewEvent(location);
+            } 
+            else if(this.state.from === 'dashboard') {
+              this._goToLocation(location);
+            }            
+          }}>
           <Image 
             style={styles.image}
             source={{ uri: location.image }}
@@ -91,6 +101,17 @@ class Locations extends Component {
       }
     });
   }
+
+  _goToLocation(location) {
+    this.props.navigator.push({
+      title: location.name,
+      component: Location,
+      passProps: { 
+        user: this.props.user,
+        location: location
+      }
+    });
+  }
   
   _onChange() {
     this.setState({
@@ -102,6 +123,9 @@ class Locations extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   text: {
     fontSize: 16,
     fontWeight: 'normal',

@@ -10,10 +10,6 @@ import GuestarAPI from '../utils/GuestarAPI';
 
 const EventActions = {
 
-  removeEventsBinding() {
-    GuestarAPI.removeEventsBinding();
-  },
-
   getEvents(userID) {
     AppDispatcher.dispatch({
       actionType: AppConstants.GET_EVENTS,

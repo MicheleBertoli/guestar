@@ -10,10 +10,6 @@ import GuestarAPI from '../utils/GuestarAPI';
 
 const LocationActions = {
 
-  removeLocationsBinding() {
-    GuestarAPI.removeLocationsBinding();
-  },
-
   getLocations(userID) {
     AppDispatcher.dispatch({
       actionType: AppConstants.GET_LOCATIONS,

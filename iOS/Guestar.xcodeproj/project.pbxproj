@@ -19,13 +19,13 @@
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9315AB2B1C08A1570034AAF2 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9315AB281C08A14E0034AAF2 /* libRCTVideo.a */; };
 		9333F1E81BEBCED500C8746F /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B311E31BEBB51800CBBD5A /* libRCTFBLogin.a */; };
 		936A003C1C3A7F7C00AB25C8 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 936A003A1C3A7F6700AB25C8 /* UIImagePickerManager.m */; };
+		939A46881C40104A00F35C6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 939A46871C40104A00F35C6C /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
 		93AFF7101BEE608A0092EE67 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AFF70D1BEE608A0092EE67 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		93AFF7111BEE608A0092EE67 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AFF70E1BEE608A0092EE67 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
 		93AFF7121BEE608A0092EE67 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93AFF70F1BEE608A0092EE67 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
@@ -157,7 +157,6 @@
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Application/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Application/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Application/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Application/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Application/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
@@ -166,6 +165,7 @@
 		9315AB1A1C08A14E0034AAF2 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		936A00391C3A7F6700AB25C8 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = "../node_modules/react-native-image-picker/ios/UIImagePickerManager.h"; sourceTree = "<group>"; };
 		936A003A1C3A7F6700AB25C8 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = "../node_modules/react-native-image-picker/ios/UIImagePickerManager.m"; sourceTree = "<group>"; };
+		939A46871C40104A00F35C6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Application/Images.xcassets; sourceTree = "<group>"; };
 		93AFF70D1BEE608A0092EE67 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Frameworks/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		93AFF70E1BEE608A0092EE67 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Frameworks/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		93AFF70F1BEE608A0092EE67 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Frameworks/FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -295,9 +295,9 @@
 				936A00381C3A7F5200AB25C8 /* UIImagePickerManager */,
 				93AFF7131BEE608E0092EE67 /* FacebookSDK */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				939A46871C40104A00F35C6C /* Images.xcassets */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -668,8 +668,8 @@
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				93FF7A361C3C29DC00CA9839 /* Foundation.ttf in Resources */,
 				93FF7A371C3C29DC00CA9839 /* Ionicons.ttf in Resources */,
+				939A46881C40104A00F35C6C /* Images.xcassets in Resources */,
 				93FF7A331C3C29DC00CA9839 /* Entypo.ttf in Resources */,
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				93FF7A3A1C3C29DC00CA9839 /* Zocial.ttf in Resources */,
 				93FF7A381C3C29DC00CA9839 /* MaterialIcons.ttf in Resources */,
 				93FF7A341C3C29DC00CA9839 /* EvilIcons.ttf in Resources */,

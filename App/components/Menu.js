@@ -12,7 +12,6 @@ const {
   StyleSheet, 
   NavigatorIOS, 
   TabBarIOS, 
-  StatusBarIOS,
   AlertIOS,
   View 
 } = React;
@@ -32,10 +31,10 @@ class Menu extends Component {
         ref={ref}
         initialRoute={route}
         style={styles.header}
-        barTintColor='#ED253C'
+        barTintColor='#FFF'
         shadowHidden={true}
-        tintColor='#FFFFFF'
-        titleTextColor='#FFFFFF'        
+        tintColor='#ED253C'
+        titleTextColor='#CE2132'        
         translucent={false}
       />
     );
@@ -84,7 +83,6 @@ class Menu extends Component {
           title={this.props.thirdRoute.title}
           iconName={this.props.thirdRoute.iconName}
           selectedIconName={this.props.thirdRoute.selectedIconName}
-          iconSize={34}
           onPress={() => {
             (this.state.selectedTab === 'third') ?
               this.refs.third.popToTop()
@@ -100,6 +98,7 @@ class Menu extends Component {
           title={this.props.fourthRoute.title}
           iconName={this.props.fourthRoute.iconName}
           selectedIconName={this.props.fourthRoute.selectedIconName}
+          iconSize={34}
           onPress={() => {
             (this.state.selectedTab === 'fourth') ?
               this.refs.fourth.popToTop()

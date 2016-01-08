@@ -11,7 +11,6 @@ import Home from './views/Home';
 const { 
   AppRegistry, 
   Component,
-  StatusBarIOS,
   StyleSheet,
   View 
 } = React;
@@ -20,7 +19,6 @@ class Application extends Component {
 
   constructor() {
     super(); 
-    StatusBarIOS.setStyle('light-content');    
   }
 
   render() {

@@ -232,6 +232,9 @@ class NewLocation extends Component {
                 lng: this.state.region.longitude
               }
             };
+
+            LocationActions.createLocation(locationData);
+
           }, type: 'plain-text'},
         {text: 'Annulla', style: 'cancel'}],
         'default'

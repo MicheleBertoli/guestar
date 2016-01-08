@@ -13,8 +13,8 @@ import Menu from '../components/Menu';
 import Login from './Login';
 import Welcome from './Welcome';
 import Events from './Events';
-import Profile from './Profile';
-import More from './More';
+import Dashboard from './Dashboard';
+import About from './About';
 
 const { 
   AsyncStorage,
@@ -22,7 +22,6 @@ const {
   Component, 
   Dimensions,
   StyleSheet, 
-  StatusBarIOS,
   Text,
   View 
 } = React;
@@ -46,7 +45,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-
     HomeStore.addChangeListener(this._onChange);
 
     AsyncStorage.getItem('accessToken').then((accessToken) => {
@@ -75,28 +73,36 @@ class Home extends Component {
                 title: 'Home',
                 component: Welcome,
                 iconName: 'ios-home-outline',
-                selectedIconName: 'ios-home'
+                selectedIconName: 'ios-home',
+                passProps: {
+                  user: this.state.user
+                }
               }}
               secondRoute={{ 
                 title: 'Eventi', 
                 component: Events,
                 iconName: 'ios-list-outline',
                 selectedIconName: 'ios-list',
+                rightButtonTitle: 'Filtra',
                 passProps: {
-                  user: this.state.user
+                  user: this.state.user,
+                  from: 'home'
                 }
               }}
               thirdRoute={{ 
-                title: 'Profilo',
-                component: Profile,
-                iconName: 'ios-person-outline',
-                selectedIconName: 'ios-person'
+                title: 'About', 
+                component: About,
+                iconName: 'ios-star-outline',
+                selectedIconName: 'ios-star'
               }}
               fourthRoute={{ 
-                title: 'Altro', 
-                component: More,
-                iconName: 'ios-settings',
-                selectedIconName: 'ios-settings-strong'
+                title: 'Dashboard',
+                component: Dashboard,
+                iconName: 'ios-person-outline',
+                selectedIconName: 'ios-person',
+                passProps: {
+                  user: this.state.user
+                }
               }}
             />
           :    

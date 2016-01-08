@@ -47,6 +47,9 @@ const GuestarAPI = {
   },
 
   getArtists() {
+
+    if(artists) base.removeBinding(artists);
+
   	artists = base.listenTo('artists', {
 	    context: this,
 	    asArray: true,
@@ -72,11 +75,10 @@ const GuestarAPI = {
 	  });
   },
 
-  removeArtistsBinding() {
-    base.removeBinding(artists);
-  },
-
   getLocations(uid) {
+
+    if(locations) base.removeBinding(locations);
+
     locations = base.listenTo('locations/' + uid, {
       context: this,
       asArray: true,
@@ -98,34 +100,32 @@ const GuestarAPI = {
     });
   },
 
-  removeLocationsBinding() {
-    base.removeBinding(locations);
-  },
+  getEvents(uid = null) {
+    
+    if(events) base.removeBinding(events);
+    const queries = (uid) ? { orderByChild: 'uid', equalTo: uid } : {};
 
-  getEvents(uid) {
-    events = base.listenTo('events/' + uid, {
+    events = base.listenTo('events', {
       context: this,
       asArray: true,
+      queries: queries,
       then(events) {
         EventActions.getEventsSuccess(events);
       },
       error(error) {
         EventActions.getEventsError(error);
       }
-    });
+    }); 
+
   },
 
   createEvent(eventData) {
-    base.push('events/' + eventData.uid, {
+    base.push('events', {
       data: eventData,
       then(){
         EventActions.createEventSuccess();
       }
     });
-  },
-
-  removeEventsBinding() {
-    base.removeBinding(events);
   }
 	
 };

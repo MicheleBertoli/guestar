@@ -73,7 +73,7 @@ class NewEvent extends Component {
             <Image 
               style={styles.image} 
               source={this.state.immagine} 
-              resizeMode={'cover'} 
+              resizeMode={'cover'}
             />
             : 
             <View style={styles.imageButton}>
@@ -159,19 +159,24 @@ class NewEvent extends Component {
         [{text: 'Crea', onPress: (text) => {
 
             const eventData = {
-              uid: this.props.user.uid,
-              name: this.state.nome,
+              artist: {
+                id: this.props.artist.id,
+                name: this.props.artist.name
+              },
+              date: this.state.data.toString(),
               description: this.state.descrizione,
-              date: this.state.data,
               image: this.state.immagine,
               location: {
                 name: this.props.location.name,
                 lat: this.props.location.location.lat,
                 lng: this.props.location.location.lng
               },
-              artist: {
-                id: this.props.artist.id,
-                name: this.props.artist.name
+              name: this.state.nome,
+              uid: this.props.user.uid,
+              user: {
+                name: this.props.user.facebook.displayName,
+                email: this.props.user.facebook.email,
+                profileImageURL: this.props.user.facebook.profileImageURL
               }
             };
 
@@ -192,7 +197,7 @@ class NewEvent extends Component {
       if(!this.state.data) 
         message += '- Data dell\'evento\n';      
       if(!this.state.immagine) 
-        message += '- Immagine della location';              
+        message += '- Immagine dell\'evento';              
       
       AlertIOS.alert(
         'Guestar', 

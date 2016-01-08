@@ -5,7 +5,6 @@
 'use strict';
 
 import React from 'react-native';
-import HomeStore from '../../stores/HomeStore';
 import Locations from './Locations';
 import NewLocation from './NewLocation';
 
@@ -29,21 +28,8 @@ class Artist extends Component {
     super(props);
     this.state = {
       artist: this.props.artist,
-      user: HomeStore.getUser()
+      user: this.props.user
     };
-    this._onChange = this._onChange.bind(this);
-  }
-
-  componentDidMount() {
-    HomeStore.addChangeListener(this._onChange);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState !== this.state;
-  }
-
-  componentWillUnmount() {
-    HomeStore.removeChangeListener(this._onChange);
   }
 
   render() {
@@ -57,9 +43,8 @@ class Artist extends Component {
         />
 
         <View style={styles.container}>
-
           <TouchableOpacity
-            onPress={() => this._goToLocation()}
+            onPress={() => this._goToLocations()}
             style={styles.button}>
             <Text 
               style={styles.buttonText}>
@@ -116,7 +101,7 @@ class Artist extends Component {
     );
   }
 
-  _goToLocation() {
+  _goToLocations() {
     this.props.navigator.push({
       title: 'Scegli la location',
       component: Locations,
@@ -125,13 +110,13 @@ class Artist extends Component {
       onRightButtonPress: () => this._goToNewLocation(),
       passProps: {
         artist: this.state.artist,
-        user: this.state.user
+        user: this.state.user,
+        from: 'artist'
       }
     });
   }
 
   _goToNewLocation() {
-
     const user = this.state.user.facebook.displayName;
     const name = user.substr(0, user.indexOf(' '));
 
@@ -153,12 +138,6 @@ class Artist extends Component {
         style={styles.boxIcon} 
       />
     );
-  }
-
-  _onChange() {
-    this.setState({
-      user: HomeStore.getUser()
-    });
   }
 }
 
