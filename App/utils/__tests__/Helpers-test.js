@@ -1,6 +1,6 @@
 jest.dontMock('../Helpers');
 
-const Helpers = require('../Helpers').default;
+const Helpers = require('../Helpers');
 
 const dummy = {
   foo: 'bar',

@@ -1,7 +1,7 @@
 jest.dontMock('lodash');
 jest.dontMock('../BaseStore');
 
-const BaseStore = require('../BaseStore').default;
+const BaseStore = require('../BaseStore');
 
 const callback = () => {};
 
